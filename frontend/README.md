@@ -3,7 +3,7 @@
 <div align="center">
 <h1 align="center">
    Friends Hamburgueria - Frontend
-     <img height="300px" src="https://lh3.googleusercontent.com/u/0/drive-viewer/AAOQEOT1idUNImjz0T47SnckKwKW67koF5mcMzS9GR3HjvZrdP0ZhTjmrNkvuZ5HV_8AzzIKWEtqMyYpoB2JqwD93oUPqcaZVg=w1960-h5156">
+     <img height="300px" src="https://user-images.githubusercontent.com/95008410/226691986-1c67a72a-f507-42b6-b763-cd39f24f1a47.png">
 </h1>
 Seja bem-vindo ao sabor e suculência a cada mordida da Friends Hamburgueria
 <hr>
