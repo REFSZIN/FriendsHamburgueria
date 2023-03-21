@@ -89,5 +89,8 @@
     "jsonwebtoken": "^9.0.0",
     "redis": "^4.6.5",
     "reflect-metadata": "^0.1.13"
+  },
+  "directories": {
+    "test": "tests"
   }
 }
