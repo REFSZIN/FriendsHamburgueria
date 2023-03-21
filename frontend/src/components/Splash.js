@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Page from './Page';
 
-import driventLogo from '../assets/images/drivent.png';
+import driventLogo from '../assets/images/friends.png';
 
 export default function Splash({ loading = false, message = '' }) {
   return (

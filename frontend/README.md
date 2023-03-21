@@ -24,35 +24,35 @@ Front-End application, React + Styled Components + MUI + Contexts + OAuth 2.0
 </br>
 <h1 align="center margin 10px">Librariess<h1>
 
-- [@date-io/date-fns](https://www.npmjs.com/package/@angular/animations) 
-- [@emotion/react](https://www.npmjs.com/package/@angular/animations) 
-- [@emotion/styled](https://www.npmjs.com/package/@angular/animations) 
-- [@material-ui/core](https://www.npmjs.com/package/@angular/animations) 
-- [@material-ui/pickers](https://www.npmjs.com/package/@angular/animations) 
-- [@mui/icons-material](https://www.npmjs.com/package/@angular/animations) 
-- [@mui/material](https://www.npmjs.com/package/@angular/animations) 
-- [@testing-library/jest-dom](https://www.npmjs.com/package/@angular/animations) 
-- [@testing-library/react](https://www.npmjs.com/package/@angular/animations) 
-- [@testing-library/user-event](https://www.npmjs.com/package/@angular/animations) 
-- [axios](https://www.npmjs.com/package/@angular/animations) 
-- [date-fns](https://www.npmjs.com/package/@angular/animations) 
-- [dayjs](https://www.npmjs.com/package/@angular/animations) 
-- [file-saver](https://www.npmjs.com/package/@angular/animations) 
-- [firebase](https://www.npmjs.com/package/@angular/animations) 
-- [html2canvas](https://www.npmjs.com/package/@angular/animations) 
-- [qs](https://www.npmjs.com/package/@angular/animations) 
-- [react](https://www.npmjs.com/package/@angular/animations) 
-- [react-credit-cards](https://www.npmjs.com/package/@angular/animations) 
-- [react-dom](https://www.npmjs.com/package/@angular/animations) 
-- [react-icons](https://www.npmjs.com/package/@angular/animations) 
-- [react-input-mask](https://www.npmjs.com/package/@angular/animations) 
-- [react-loader-spinner](https://www.npmjs.com/package/@angular/animations)
-- [react-router-dom](https://www.npmjs.com/package/@angular/animations) 
-- [react-scripts](https://www.npmjs.com/package/@angular/animations) 
-- [react-toastify](https://www.npmjs.com/package/@angular/animations) 
-- [react-useinterval](https://www.npmjs.com/package/@angular/animations) 
-- [styled-components](https://www.npmjs.com/package/@angular/animations) 
-- [web-vitals](https://www.npmjs.com/package/@angular/animations) 
+- [@date-io/date-fns](https://www.npmjs.com/package/@date-io/date-fns) 
+- [@emotion/react](https://www.npmjs.com/package/@emotion/react) 
+- [@emotion/styled](https://www.npmjs.com/package/@emotion/styled) 
+- [@material-ui/core](https://www.npmjs.com/package/@material-ui/core) 
+- [@material-ui/pickers](https://www.npmjs.com/package/@material-ui/pickers) 
+- [@mui/icons-material](https://www.npmjs.com/package/@mui/icons-material) 
+- [@mui/material](https://www.npmjs.com/package/@mui/material) 
+- [@testing-library/jest-dom](https://www.npmjs.com/package/@testing-library/jest-dom) 
+- [@testing-library/react](https://www.npmjs.com/package/@testing-library/react) 
+- [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event) 
+- [axios](https://www.npmjs.com/package/axios) 
+- [date-fns](https://www.npmjs.com/package/date-fns) 
+- [dayjs](https://www.npmjs.com/package/dayjs) 
+- [file-saver](https://www.npmjs.com/package/file-saver) 
+- [firebase](https://www.npmjs.com/package/firebase) 
+- [html2canvas](https://www.npmjs.com/package/html2canvas) 
+- [qs](https://www.npmjs.com/package/qs) 
+- [react](https://www.npmjs.com/package/react) 
+- [react-credit-cards](https://www.npmjs.com/package/react-credit-cards) 
+- [react-dom](https://www.npmjs.com/package/react-dom) 
+- [react-icons](https://www.npmjs.com/package/react-icons) 
+- [react-input-mask](https://www.npmjs.com/package/react-input-mask) 
+- [react-loader-spinner](https://www.npmjs.com/package/react-loader-spinner)
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom) 
+- [react-scripts](https://www.npmjs.com/package/react-scripts) 
+- [react-toastify](https://www.npmjs.com/package/react-toastify) 
+- [react-useinterval](https://www.npmjs.com/package/react-useinterval) 
+- [styled-components](https://www.npmjs.com/package/styled-components) 
+- [web-vitals](https://www.npmjs.com/package/web-vitals) 
 <br/>
 ## Environment Variables
 
@@ -185,202 +185,3 @@ There are several things you need to do when you add new ENV VARIABLES:
 - Add them to your docker-compose.yml file (just the name, not the value). Only envs listed in the environment section will be exposed to your docker container.
 - Add them (prod version) to your github repo secrets. They will be used to generate the `.env` file on deploy.
 - Add them (prod version) to test.yml file on .github/workflows/test.yml.
-
-## API Reference
-
-
-### Get card balance
-
-```http
-GET /mycard-transactions/:id
-```
-
-#### Request:
-
-| Params      | Type      | Description           |
-| :---------- | :-------- | :-------------------- |
-| `cardId`    | `integer` | **Required**. card Id |
-
-#
-
-### Create a card
-
-```http
-POST /create-card/:id
-```
-
-#### Request:
-
-| Params      | Type      | Description           |
-| :---------- | :-------- | :-------------------- |
-| `employeeId` | `integer`| **Required**. user Id | 
-
-####
-
-| Body         | Type     | Description                              |
-| :------------| :------- | :--------------------------------------- |
-| `type`       | `string` | **Required**. type of card benefit       |
-
-`Valid types: [groceries, restaurant, transport, education, health]`
-
-####
-
-| Headers     | Type     | Description           |
-| :---------- | :------- | :-------------------- |
-| `x-api-key` | `string` | **Required**. api key |
-
-####
-
-</br>
-
-#### Response:
-
-```json
-{
-	"number": "1111-1111-1111-1111",
-	"cardholderName": "NAME N NAME",
-	"securityCode": "111",
-	"expirationDate": "01/27",
-	"isVirtual": false,
-	"isBlocked": true,
-	"type": "card type",
-	"cvc": "111"
-}
-```
-`number has no defined format`
-
-#
-
-### Activate a card
-
-```http
-PUT /activate-card
-```
-
-#### Request:
-
-| Body             | Type     | Description                        |
-| :--------------- | :------- | :--------------------------------- |
-| `cardId`         | `integer`| **Required**. card Id              |
-| `password`       | `string` | **Required**. card password        |
-| `securityCode`   | `string` | **Required**. card cvv             |
-
-`Password length: 4`
-
-`Password pattern: only numbers`
-
-`Cvv max length: 3`
-
-#
-
-### Block a card
-
-```http
-PUT /mycard-block/:id
-```
-
-#### Request:
-
-|    Params        |   Type   | Description                        |
-| :----------      | :--------| :----------------------------------|
-| `cardId`         | `integer`| **Required**. card Id              | 
-
-####
-
-| Body             | Type     | Description                        |
-| :--------------- | :------- | :--------------------------------- |
-| `password`       | `string` | **Required**. card password        |
-
-#
-
-### Unlock a card
-
-```http
-PUT /mycard-unblock/:id
-```
-
-#### Request:
-
-|    Params        |   Type   | Description                        |
-| :----------      | :--------| :----------------------------------|
-| `cardId`         | `integer`| **Required**. card Id              | 
-
-####
-
-| Body             | Type     | Description                        |
-| :--------------- | :------- | :--------------------------------- |
-| `password`       | `string` | **Required**. card password        |
-
-#
-
-### Recharge a card
-
-```http
-POST /recharge-card/:id
-```
-
-#### Request:
-
-| Headers     | Type     | Description           |
-| :---------- | :------- | :-------------------- |
-| `x-api-key` | `string` | **Required**. api key |
-
-####
-
-|    Params        |   Type   | Description                        |
-| :----------      | :--------| :----------------------------------|
-| `cardId`         | `integer`| **Required**. card Id              | 
-
-####
-
-| Body             | Type      | Description                        |
-| :--------------- | :-------- | :--------------------------------- |
-| `amount`         | `integer` | **Required**. recharge amount      |
-
-#
-
-### Card payments
-
-```http
-POST /buy-store/:id
-```
-#### Request:
-
-|    Params        |   Type   | Description                        |
-| :----------      | :--------| :----------------------------------|
-| `businessId`     | `integer` | **Required**. card expiration date| 
-
-####
-
-| Body             | Type      | Description                        |
-| :--------------- | :-------- | :--------------------------------- |
-| `cardId`         | `integer` | **Required**. card Id              |
-| `password`       | `string`  | **Required**. card password        |
-| `amount`         | `integer` | **Required**. payment amount       |
-
-#
-
-```http
-POST /buy-online/:id
-```
-
-#### Request:
-
-|    Params        |   Type   | Description                        |
-| :----------      | :--------| :----------------------------------|
-| `businessId`     | `integer` | **Required**. card expiration date| 
-
-####
-
-| Body             | Type      | Description                        |
-| :--------------- | :-------- | :--------------------------------- |
-| `cardId`         | `integer` | **Required**. card Id              |
-| `cardholderName` | `string`  | **Required**. name in card         |
-| `cardNumber`     | `string`  | **Required**. card number          |
-| `expirationDate` | `string`  | **Required**. card expiration date |
-| `securityCode`   | `string`  | **Required**. card CVV             |
-| `amount`         | `integer` | **Required**. payment amount       |
-
-`Expiration Date Format: "MM/YY"`
-
-#
