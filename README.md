@@ -1,13 +1,10 @@
 <!-- markdownlint-disable -->
 ![waving](https://capsule-render.vercel.app/api?type=waving&height=200&text=REFSZIN%20&fontAlignY=40&color=gradient)
 <div align="center">
+     <img height="300px" src="https://user-images.githubusercontent.com/95008410/226691986-1c67a72a-f507-42b6-b763-cd39f24f1a47.png">
 <h1 align="center">
-   Friends Hamburgueria - Full Stack  
-   <p align="center">
-  <img height="300px" src="https://lh3.googleusercontent.com/u/0/drive-viewer/AAOQEOT1idUNImjz0T47SnckKwKW67koF5mcMzS9GR3HjvZrdP0ZhTjmrNkvuZ5HV_8AzzIKWEtqMyYpoB2JqwD93oUPqcaZVg=w1960-h5156">
-</p>
+   Friends Hamburgueria - Frontend
 </h1>
-
 Seja bem-vindo ao sabor e suculência a cada mordida da Friends Hamburgueria
 <hr>
   <h3>Built With</h3>
