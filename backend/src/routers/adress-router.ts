@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { createAdressSchema } from "@/schemas";
 import { validateBody } from "@/middlewares";
-import { adressGet, adressPut, adressPost} from "@/controllers";
+import { adressGet, adressPut, adressPost } from "@/controllers";
 
 const adressRouter = Router();
 

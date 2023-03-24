@@ -13,11 +13,9 @@ import Home from './pages/Home';
 import Sobre from './pages/Sobre';
 import SignOut from './pages/SignOut';
 import SignIn from './pages/SignIn';
-import Cardapio from './pages/Cardapio';
 import Cart from './pages/Cart';
-import Avaliacao from './pages/Avaliacao';
-import Pontos from './pages/Pontos';
 import Panel from './pages/Panel';
+import useType from './hooks/useType';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCcDocJmACaQnHwV7O7bxzHi45k9QWfBCU',
@@ -44,9 +42,6 @@ export default function App() {
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/cadastro" element={<SignOut />} />
             <Route path="/login" element={<SignIn />} />
-            <Route path="/cardapio" element={<Cardapio />} />
-            <Route path="/pontos" element={<Pontos />} />
-            <Route path="/avaliacao" element={<Avaliacao />} />
             <Route
               path="/panel"
               element={
@@ -84,9 +79,9 @@ function ProtectedRouteGuard({ children }) {
 }
 
 function ProtectedRouteGuardAdmin({ children }) {
-  const token = useToken();
+  const type = useType();
 
-  if (!token) {
+  if (type === 0) {
     return <Navigate to="/" />;
   }
 

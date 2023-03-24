@@ -110,8 +110,6 @@ button:hover{
 
 *{
 	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
-	--font-all: 'Poppins', sans-serif;
 	--color-bg: #181a21;
 	--color-light-grey: #353840;
 	--color-dark-grey: #20222A;
@@ -126,6 +124,7 @@ body{
 	color: #ffffff;
   height: 100vh;
 }
+
 ::-webkit-scrollbar {
   display: none;	
 }

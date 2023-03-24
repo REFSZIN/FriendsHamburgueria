@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import LogoImg from '../../assets/images/friends.png';
 import { useNavigate } from 'react-router-dom';
 import {
   FaGithub,
@@ -42,7 +43,7 @@ export default function SignIn() {
   return (
     <main>
       <nav>
-        <img alt="Event Logo" width="60px" />
+        <img src={LogoImg} alt="Event Logo" width="60px" />
         <h4>Friends</h4>
       </nav>
       <div>
