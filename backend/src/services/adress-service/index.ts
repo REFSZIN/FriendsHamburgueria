@@ -1,60 +1,69 @@
-import sessionRepository from "@/repositories/session-repository";
-import userRepository from "@/repositories/user-repository";
+import addressRepository from "@/repositories/adress-repository";
 import { exclude } from "@/utils/prisma-utils";
-import { user } from "@prisma/client";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { address } from "@prisma/client";
 import { invalidCredentialsError } from "./errors";
 
-async function signIn(params: SignInParams): Promise<SignInResult> {
-  const { email, password } = params;
-
-  const user = await getUserOrFail(email);
-
-  await validatePasswordOrFail(password, user.password);
-
-  const token = await createSession(user.id);
-
-  return {
-    user: exclude(user, "password"),
-    token,
-  };
+export interface Address {
+  cep: string;
+  street: string;
+  city: string;
+  state: string;
+  number: string;
+  neighborhood: string;
+  addressDetail?: string;
 }
 
-async function getUserOrFail(email: string): Promise<GetUserOrFailResult> {
-  const user = await userRepository.findByEmail(email, { id: true, email: true, password: true });
-  if (!user) throw invalidCredentialsError();
-
-  return user;
+async function getAddressById(addressId: number, userId: number): Promise<address | null> {
+  const existingAddress = await addressRepository.findById(addressId);
+  if (!existingAddress) {
+    throw new Error("Endereço não encontrado");
+  }
+  if (existingAddress.userId !== userId ) {
+    throw invalidCredentialsError();
+  }
+  return existingAddress;
 }
 
-async function createSession(userId: number) {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-  await sessionRepository.create({
-    token,
-    userId,
-  });
-
-  return token;
+async function createAddress( userId: number, cep: string, street: string, city: string, state: string, number: string, neighborhood: string, addressDetail: string): Promise<Address> {
+  const addressData = { cep, userId, street, city, state, number, neighborhood, addressDetail };  
+  const createdAddress = await addressRepository.create(addressData);
+  return createdAddress;
 }
 
-async function validatePasswordOrFail(password: string, userPassword: string) {
-  const isPasswordValid = await bcrypt.compare(password, userPassword);
-  if (!isPasswordValid) throw invalidCredentialsError();
+async function deleteAddressById(addressId: number, userId: number): Promise<address | null> {
+  const existingAddress = await addressRepository.findById(addressId);
+  if (!existingAddress) {
+    throw new Error("Endereço não encontrado");
+  }
+  if (existingAddress.userId !== userId ) {
+    throw invalidCredentialsError();
+  }
+  const deletedAddress = await addressRepository.deleteById(addressId, userId );
+  return deletedAddress;
 }
 
-export type SignInParams = Pick<user, "email" | "password">;
+async function updateAddress(address: number, userId: number, updates: Partial<Omit<address, "id">>): Promise<address> {
+  // Verifica se o endereço existe
+  const existingAddress = await addressRepository.findById(address);
+  if (!existingAddress) {
+    throw new Error("Endereço não encontrado");
+  }
 
-type SignInResult = {
-  user: Pick<user, "id" | "email">;
-  token: string;
+  if (existingAddress.userId !== userId) {
+    throw invalidCredentialsError();
+  }
+
+  // Atualiza o endereço
+  const updatedAddress = await addressRepository.update(address, exclude(updates));
+  return updatedAddress;
+}
+
+const addressService = {
+  getAddressById,
+  createAddress,
+  updateAddress,
+  deleteAddressById,
 };
 
-type GetUserOrFailResult = Pick<user, "id" | "email" | "password">;
-
-const authenticationService = {
-  signIn,
-};
-
-export default authenticationService;
+export default addressService;
 export * from "./errors";

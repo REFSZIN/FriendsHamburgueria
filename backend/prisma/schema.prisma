@@ -16,7 +16,6 @@ model user {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   session   session[]
-  address   address[] 
   purchase  purchase[]
 }
 
@@ -38,8 +37,7 @@ model address {
   number        String     @db.VarChar(255)
   neighborhood  String     @db.VarChar(255)
   addressDetail String?    @db.VarChar(255)
-  userId  Int        @unique
-  user    user  @relation(fields: [userId], references: [id])
+  userId  Int       
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }

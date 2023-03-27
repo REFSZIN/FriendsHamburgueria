@@ -23,7 +23,7 @@ app
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/users", usersRouter)
   .use("/auth", authenticationRouter)
-  .use("/adress", adressRouter)
+  .use("/address", adressRouter)
   .use("/products", productsRouter)
   .use("/purchase", purchaseRouter)
   .use(handleApplicationErrors);
