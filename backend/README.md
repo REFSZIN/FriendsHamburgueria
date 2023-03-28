@@ -27,6 +27,7 @@ Full Stack application,NodeJs + Typescript para API, Jest para testes de int e u
 </br>
 <h1 align="center margin 10px">Librariess<h1>
 
+### 
 - [@faker-js/faker](https]//www.npmjs.com/package/@faker-js/faker])
 - [@types/bcrypt](https]//www.npmjs.com/package/@types/bcrypt)
 - [@types/cors](https]//www.npmjs.com/package/@types/cors)
