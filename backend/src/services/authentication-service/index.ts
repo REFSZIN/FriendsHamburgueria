@@ -1,7 +1,7 @@
 import sessionRepository from "@/repositories/session-repository";
 import userRepository from "@/repositories/user-repository";
 import { exclude } from "@/utils/prisma-utils";
-import { User } from "@prisma/client";
+import { user } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { invalidCredentialsError } from "./errors";
@@ -43,14 +43,14 @@ async function validatePasswordOrFail(password: string, userPassword: string) {
   if (!isPasswordValid) throw invalidCredentialsError();
 }
 
-export type SignInParams = Pick<User, "email" | "password">;
+export type SignInParams = Pick<user, "email" | "password">;
 
 type SignInResult = {
-  user: Pick<User, "id" | "email">;
+  user: Pick<user, "id" | "email">;
   token: string;
 };
 
-type GetUserOrFailResult = Pick<User, "id" | "email" | "password">;
+type GetUserOrFailResult = Pick<user, "id" | "email" | "password">;
 
 const authenticationService = {
   signIn,

@@ -11,14 +11,11 @@ import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import Home from './pages/Home';
 import Sobre from './pages/Sobre';
-import Perfil from './pages/Perfil';
 import SignOut from './pages/SignOut';
 import SignIn from './pages/SignIn';
-import Cardapio from './pages/Cardapio';
 import Cart from './pages/Cart';
-import Avaliacao from './pages/Avaliacao';
-import Pontos from './pages/Pontos';
 import Panel from './pages/Panel';
+import useType from './hooks/useType';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCcDocJmACaQnHwV7O7bxzHi45k9QWfBCU',
@@ -43,23 +40,25 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sobre" element={<Sobre />} />
-            <Route path="/perfil" element={<Perfil />} />
             <Route path="/cadastro" element={<SignOut />} />
             <Route path="/login" element={<SignIn />} />
             <Route
-              path="/cart"
+              path="/panel"
+              element={
+                <ProtectedRouteGuardAdmin>
+                  <Panel />
+                </ProtectedRouteGuardAdmin>
+              }
+            />
+            <Route
+              path="/carrinho"
               element={
                 <ProtectedRouteGuard>
-                  <Cardapio />
                   <Cart />
-                  <Panel />
-                  <Avaliacao/>
-                  <Pontos/>
                 </ProtectedRouteGuard>
               }
-            >
-              <Route index path="*" element={<Navigate to="/" />} />
-            </Route>
+            />
+            <Route index path="*" element={<Navigate to="/" />} />
           </Routes>
         </Router>
       </UserProvider>
@@ -72,6 +71,18 @@ function ProtectedRouteGuard({ children }) {
 
   if (!token) {
     return <Navigate to="/login" />;
+  }
+
+  return <>
+    {children}
+  </>;
+}
+
+function ProtectedRouteGuardAdmin({ children }) {
+  const type = useType();
+
+  if (type === 0) {
+    return <Navigate to="/" />;
   }
 
   return <>
