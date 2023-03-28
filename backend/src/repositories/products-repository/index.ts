@@ -1,29 +1,59 @@
 import { prisma } from "@/config";
-import { Prisma } from "@prisma/client";
+import { Product } from "@/schemas";
 
-async function findByEmail(email: string, select?: Prisma.userSelect) {
-  const params: Prisma.userFindUniqueArgs = {
-    where: {
-      email,
-    },
-  };
-
-  if (select) {
-    params.select = select;
-  }
-
-  return prisma.user.findUnique(params);
+interface CreateProductInput {
+  name: string;
+  photoUrl: string;
+  price: number;
+  description: string;
 }
 
-async function create(data: Prisma.userUncheckedCreateInput) {
-  return prisma.user.create({
-    data,
-  });
+interface UpdateProductInput {
+  name?: string;
+  photoUrl?: string;
+  price?: number;
+  description?: string;
 }
 
-const userRepository = {
-  findByEmail,
+const productRepository = {
+  findById,
+  find,
   create,
+  deleteById,
+  update,
 };
 
-export default userRepository;
+async function findById(id: number): Promise<Product | null> {
+  const product = await prisma.product.findUnique({
+    where: { id },
+  });
+  return product || null;
+}
+
+async function find(): Promise<Product[]> {
+  const products = await prisma.product.findMany();
+  return products;
+}
+
+async function create(productData: CreateProductInput): Promise<Product> {
+  const product = await prisma.product.create({
+    data: productData,
+  });
+  return product;
+}
+
+async function deleteById(id: number): Promise<Product | null> {
+  const product = await prisma.product.delete({
+    where: { id },
+  });
+  return product || null;
+}
+
+async function update(id: number, productData: UpdateProductInput): Promise<Product> {
+  const product = await prisma.product.update({
+    where: { id },
+    data: productData,
+  });
+  return product;
+}
+export default productRepository;

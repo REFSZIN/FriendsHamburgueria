@@ -1,60 +1,63 @@
-import sessionRepository from "@/repositories/session-repository";
+import purchaseRepository from "@/repositories/purchase-repository";
+import { Product, Purchase } from "@/schemas";
 import userRepository from "@/repositories/user-repository";
-import { exclude } from "@/utils/prisma-utils";
-import { user } from "@prisma/client";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { invalidCredentialsError } from "./errors";
 
-async function signIn(params: SignInParams): Promise<SignInResult> {
-  const { email, password } = params;
+async function getPurchase(): Promise<Purchase[]> {
+  const purchases = await purchaseRepository.find();
+  return purchases;
+}
 
-  const user = await getUserOrFail(email);
+async function getPurchaseById(userId: number): Promise<Purchase> {
+  const purchases = await purchaseRepository.findById(userId);
+  return purchases;
+}
+async function createPurchase(userId: number, produtos: Product[], address: string, metodo: string, description: string, price: number): Promise<Purchase> {
+  const user = await userRepository.find(userId);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  if (produtos.length === 0) {
+    throw new Error("Products list is empty");
+  }
 
-  await validatePasswordOrFail(password, user.password);
-
-  const token = await createSession(user.id);
-
-  return {
-    user: exclude(user, "password"),
-    token,
+  const produtosData = {
+    set: produtos.map(product => product.name)
   };
+
+  const purchaseData = { userId, produtos: produtosData, address, metodo, description, price };
+  const purchase = await purchaseRepository.create(purchaseData);
+  return purchase;
 }
 
-async function getUserOrFail(email: string): Promise<GetUserOrFailResult> {
-  const user = await userRepository.findByEmail(email, { id: true, email: true, password: true });
-  if (!user) throw invalidCredentialsError();
-
-  return user;
+async function deletePurchase(userId: number, purchaseId: number): Promise<Purchase | null> {
+  const purchase = await purchaseRepository.findById(purchaseId);
+  if (!purchase) {
+    throw new Error("Purchase not found");
+  }
+  if (purchase.userId !== userId) {
+    throw new Error("User not authorized to delete this purchase");
+  }
+  const deletedPurchase = await purchaseRepository.deleteById(purchaseId);
+  return deletedPurchase;
 }
 
-async function createSession(userId: number) {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-  await sessionRepository.create({
-    token,
-    userId,
-  });
-
-  return token;
+async function putPurchase(purchaseId: number, produtos: Product[], address: string, metodo: string, description: string, price: number, userId: number): Promise<Purchase> {
+  const purchase = await purchaseRepository.findById(purchaseId);
+  if (!purchase) {
+    throw new Error("Purchase not found");
+  }
+  if (purchase.userId !== userId) {
+    throw new Error("User not authorized to update this purchase");
+  }
+  const purchaseData = { produtos, address, metodo, description, price };
+  const updatedPurchase = await purchaseRepository.update(purchaseId, purchaseData);
+  return updatedPurchase;
 }
 
-async function validatePasswordOrFail(password: string, userPassword: string) {
-  const isPasswordValid = await bcrypt.compare(password, userPassword);
-  if (!isPasswordValid) throw invalidCredentialsError();
-}
-
-export type SignInParams = Pick<user, "email" | "password">;
-
-type SignInResult = {
-  user: Pick<user, "id" | "email">;
-  token: string;
+export default {
+  getPurchase,
+  getPurchaseById,
+  createPurchase,
+  deletePurchase,
+  putPurchase
 };
-
-type GetUserOrFailResult = Pick<user, "id" | "email" | "password">;
-
-const authenticationService = {
-  signIn,
-};
-
-export default authenticationService;
-export * from "./errors";

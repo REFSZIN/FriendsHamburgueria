@@ -35,7 +35,6 @@ const addressRepository: AddressRepository = {
   async deleteById(addressId: number, userId: number): Promise<address> {
     const user = await prisma.address.findUnique({
       where: {
-        userId: userId,
         id: addressId
       }
     });

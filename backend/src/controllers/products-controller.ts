@@ -1,15 +1,31 @@
-import userService from "@/services/users-service";
+import { AuthenticatedRequest } from "@/middlewares";
+import productsService from "@/services/products-service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 
+export async function productsById(req: Request, res: Response) {
+  const productId = Number(req.body.productId);
+  try {
+    const product = await productsService.getProductsById(productId);
+    if (!product) {
+      return res.status(httpStatus.NOT_FOUND).json({ error: "Product not found" });
+    }
+    return res.status(httpStatus.CREATED).json({
+      product
+    });
+  } catch (error) {
+    if (error.name === "DuplicatedEmailError") {
+      return res.status(httpStatus.CONFLICT).send(error);
+    }
+    return res.status(httpStatus.BAD_REQUEST).send(error);
+  }
+}
+
 export async function productsGet(req: Request, res: Response) {
-  const { email, password } = req.body;
-
   try {
-    const user = await userService.createUser({ email, password });
+    const products = await productsService.getProducts();
     return res.status(httpStatus.CREATED).json({
-      id: user.id,
-      email: user.email,
+      products
     });
   } catch (error) {
     if (error.name === "DuplicatedEmailError") {
@@ -19,14 +35,14 @@ export async function productsGet(req: Request, res: Response) {
   }
 }
 
-export async function productsPost(req: Request, res: Response) {
-  const { email, password } = req.body;
+export async function productsPost(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { name, photoUrl, price, description } = req.body;
 
   try {
-    const user = await userService.createUser({ email, password });
+    const productPosted = await productsService.postProducts( name, photoUrl, price, description, userId );
     return res.status(httpStatus.CREATED).json({
-      id: user.id,
-      email: user.email,
+      productPosted
     });
   } catch (error) {
     if (error.name === "DuplicatedEmailError") {
@@ -36,14 +52,29 @@ export async function productsPost(req: Request, res: Response) {
   }
 }
 
-export async function productsPut(req: Request, res: Response) {
-  const { email, password } = req.body;
-
+export async function productsPut(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { name, photoUrl, price, description, productId } = req.body;
   try {
-    const user = await userService.createUser({ email, password });
+    const productPuted = await productsService.putProducts(userId, productId, { name, photoUrl, price, description });
     return res.status(httpStatus.CREATED).json({
-      id: user.id,
-      email: user.email,
+      productPuted
+    });
+  } catch (error) {
+    if (error.name === "DuplicatedEmailError") {
+      return res.status(httpStatus.CONFLICT).send(error);
+    }
+    return res.status(httpStatus.BAD_REQUEST).send(error);
+  }
+}
+
+export async function productsDelete(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { productid } = req.body;
+  try {
+    const productDeleted = await productsService.productsDelete( productid, userId );
+    return res.status(httpStatus.CREATED).json({
+      productDeleted
     });
   } catch (error) {
     if (error.name === "DuplicatedEmailError") {
