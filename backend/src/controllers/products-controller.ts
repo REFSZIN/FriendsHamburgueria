@@ -37,10 +37,10 @@ export async function productsGet(req: Request, res: Response) {
 
 export async function productsPost(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  const { name, photoUrl, price, description } = req.body;
+  const { name, photoUrl, price, description, category } = req.body;
 
   try {
-    const productPosted = await productsService.postProducts( name, photoUrl, price, description, userId );
+    const productPosted = await productsService.postProducts( name, photoUrl, price, description, userId, category );
     return res.status(httpStatus.CREATED).json({
       productPosted
     });
@@ -54,9 +54,9 @@ export async function productsPost(req: AuthenticatedRequest, res: Response) {
 
 export async function productsPut(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  const { name, photoUrl, price, description, productId } = req.body;
+  const { name, photoUrl, price, description, productId, category } = req.body;
   try {
-    const productPuted = await productsService.putProducts(userId, productId, { name, photoUrl, price, description });
+    const productPuted = await productsService.putProducts(userId, productId, { name, photoUrl, price, description, category });
     return res.status(httpStatus.CREATED).json({
       productPuted
     });

@@ -6,12 +6,14 @@ interface CreateProductInput {
   photoUrl: string;
   price: number;
   description: string;
+  category: string;
 }
 
 interface UpdateProductInput {
   name?: string;
   photoUrl?: string;
   price?: number;
+  category?: string;
   description?: string;
 }
 

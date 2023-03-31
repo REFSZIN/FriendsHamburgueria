@@ -13,7 +13,8 @@ import {
   authenticationRouter,
   productsRouter,
   adressRouter,
-  purchaseRouter
+  purchaseRouter,
+  additionsRouter
 } from "@/routers";
 
 const app = express();
@@ -25,6 +26,7 @@ app
   .use("/auth", authenticationRouter)
   .use("/address", adressRouter)
   .use("/products", productsRouter)
+  .use("/additions", additionsRouter)
   .use("/purchase", purchaseRouter)
   .use(handleApplicationErrors);
 

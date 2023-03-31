@@ -51,8 +51,9 @@
 	word-wrap: break-word;
 	word-break: break-all;
 }
-a{
-    text-decoration: none;
+a, Link{
+	color: white;
+  text-decoration: none;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -110,11 +111,11 @@ button:hover{
 
 *{
 	box-sizing: border-box;
-	--color-bg: #181a21;
-	--color-light-grey: #353840;
-	--color-dark-grey: #20222A;
-	--color-menu: #1E1F24;
-	--color-text-grey: #353840;
+	--color-bg: ##0B0909;
+	--color-light-grey: ##0B0909;
+	--color-dark-grey: ##0B0909;
+	--color-menu: ##0B0909;
+	--color-text-grey: ##0B0909;
 }
 
 body{
@@ -124,7 +125,9 @@ body{
 	color: #ffffff;
   height: 100vh;
 }
-
+.MuiPaper-root{
+	background-color: var(--color-bg) !important;
+}
 ::-webkit-scrollbar {
   display: none;	
 }

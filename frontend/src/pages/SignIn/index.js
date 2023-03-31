@@ -1,13 +1,15 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import LogoImg from '../../assets/images/friends.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   FaGithub,
 } from 'react-icons/fa';
-
+import styled from 'styled-components';
 import { getAuth, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
+import { Container, Typography, TextField, Button } from '@material-ui/core';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -33,7 +35,7 @@ export default function SignIn() {
   async function submit(event) {
     event.preventDefault();
     try {
-      navigate('/dashboard');
+      navigate('/');
       toast('Login realizado com sucesso!');
     } catch (err) {
       toast('Não foi possível fazer o login!');
@@ -41,23 +43,54 @@ export default function SignIn() {
   }  
 
   return (
-    <main>
-      <nav>
+    <Main>
+      <Header/>
+      <SignInContainer>
         <img src={LogoImg} alt="Event Logo" width="60px" />
-        <h4>Friends</h4>
-      </nav>
-      <div>
-        <div>Entrar</div>
+        <Typography variant="h4">Entrar</Typography>
         <form onSubmit={submit}>
-          <input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <button type="submit" color="primary" fullWidth disabled={false}>Entrar</button>
+          <TextField label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
+          <TextField label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
+          <Button type="submit" variant="contained" color="primary" fullWidth disabled={false}>Entrar</Button>
         </form>
-        <button onClick={submitGithub} color="primary" fullWidth disabled={false}><FaGithub></FaGithub>Github</button>
-      </div>
-      <div>
-        <a to="/enroll">Não possui login? Inscreva-se</a>
-      </div>
-    </main>
+        <Button onClick={submitGithub} variant="contained" color="secondary" fullWidth disabled={false}><FaGithub></FaGithub> Github</Button>
+        <Typography variant="body">
+          Não possui login? <Link to="/cadastro">Inscreva-se</Link>
+        </Typography>
+      </SignInContainer>
+      <Footer/>
+    </Main>
   );
 }
+const Main = styled.main`
+  min-height: 100vh;
+  width: 100vw;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+`;
+
+const SignInContainer = styled(Container)`
+  background-color: #F5F5F5;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 24px;
+  text-align: center;
+  color: black;
+  margin-top: calc(30vh - 10vh);
+  & > *:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
+`;

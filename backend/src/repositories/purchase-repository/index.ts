@@ -9,6 +9,7 @@ interface UpdatePurchaseInput {
   metodo?: string;
   description?: string;
   price?: number;
+  category?: string;
 }
 
 const purchaseRepository = {

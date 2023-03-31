@@ -20,7 +20,7 @@ async function getProducts(): Promise<Product[] | null> {
   return existingProducts;
 }
 
-async function postProducts(name: string, photoUrl: string, price: number, description: string, userId: number  ): Promise<Product> {
+async function postProducts(name: string, photoUrl: string, price: number, description: string, userId: number, category: string  ): Promise<Product> {
   // Verifica se o user existe e administ
   const existingUser = await userRepository.find(userId);
   if (!existingUser) {
@@ -29,7 +29,7 @@ async function postProducts(name: string, photoUrl: string, price: number, descr
   if (existingUser.type !== 999) {
     throw invalidCredentialsError();
   }
-  const productData = { name, photoUrl, price, description };  
+  const productData = { name, photoUrl, price, description, category };  
   const createdProduct = await productRepository.create(productData);
   return createdProduct;
 }

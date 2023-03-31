@@ -2,10 +2,9 @@ import app, { init } from "@/app";
 import { prisma } from "@/config";
 import { duplicatedEmailError } from "@/services/users-service";
 import { faker } from "@faker-js/faker";
-import dayjs from "dayjs";
 import httpStatus from "http-status";
 import supertest from "supertest";
-import { createEvent, createUser } from "../factories";
+import { createUser } from "../factories";
 import { cleanDb } from "../helpers";
 
 beforeAll(async () => {
@@ -44,21 +43,7 @@ describe("POST /users", () => {
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
     });
 
-    it("should respond with status 400 when current event did not started yet", async () => {
-      const event = await createEvent({ startsAt: dayjs().add(1, "day").toDate() });
-      const body = generateValidBody();
-
-      const response = await server.post("/users").send(body).query({ eventId: event.id });
-
-      expect(response.status).toBe(httpStatus.BAD_REQUEST);
-    });
-
     describe("when event started", () => {
-      beforeAll(async () => {
-        await prisma.event.deleteMany({});
-        await createEvent();
-      });
-
       it("should respond with status 409 when there is an user with given email", async () => {
         const body = generateValidBody();
         await createUser(body);
