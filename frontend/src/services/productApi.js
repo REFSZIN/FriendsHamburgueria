@@ -1,7 +1,7 @@
 import api from './api';
 
-export async function save(body, token) {
-  const response = await api.post('/enrollments', body, {
+export async function getProductInformations(body, token) {
+  const response = await api.get('/products', body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -10,8 +10,38 @@ export async function save(body, token) {
   return response.data;
 }
 
-export async function getPersonalInformations(token) {
-  const response = await api.get('/enrollments', {
+export async function getProductByIdInformations(body, token) {
+  const response = await api.get('/products/id', body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function deleteProductInformations(body, token) {
+  const response = await api.delete('/products', body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function putProductInformations(body, token) {
+  const response = await api.put('/products', body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
+export async function postProductInformations(body, token) {
+  const response = await api.post('/products', body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

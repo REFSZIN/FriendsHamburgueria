@@ -1,20 +1,20 @@
 import useAsync from '../useAsync';
 import useToken from '../useToken';
 
-import * as enrollmentApi from '../../services/enrollmentApi';
+import * as addressApi from '../../services/addressApi';
 
-export default function useSaveEnrollment() {
+export default function useSaveAddrees() {
   const token = useToken();
 
   const {
-    loading: saveEnrollmentLoading,
-    error: saveEnrollmentError,
-    act: saveEnrollment
-  } = useAsync((data) => enrollmentApi.save(data, token), false);
+    loading: saveAddreesLoading,
+    error: saveAddreesError,
+    act: saveAddrees
+  } = useAsync((data) => addressApi.save(data, token), false);
 
   return {
-    saveEnrollmentLoading,
-    saveEnrollmentError,
-    saveEnrollment
+    saveAddreesLoading,
+    saveAddreesError,
+    saveAddrees
   };
 }

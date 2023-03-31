@@ -6,8 +6,8 @@ import { addressGet, addressPut, addressPost, addressDelete } from "@/controller
 
 const adressRouter = Router();
 
-adressRouter.get("/", addressGet);
 adressRouter.all("/*", authenticateToken);
+adressRouter.get("/", addressGet);
 adressRouter.delete("/", addressDelete);
 adressRouter.post("/", validateBody(createAdressSchema), addressPost);
 adressRouter.put("/", validateBody(putAdressSchema), addressPut);
