@@ -12,18 +12,22 @@ import {
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import styled from 'styled-components';
+import useSignUp from '../../hooks/api/useSignUp';
+
 export default function SignOut() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const { signUpLoading, signUp } = useSignUp();
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirmPassword) {
       toast('As senhas devem ser iguais!');
     } else {
       try {
+        await signUp(email, password);
         toast('Inscrito com sucesso! Por favor, faça login.');
         navigate('/sign-in');
       } catch (error) {
@@ -76,7 +80,7 @@ export default function SignOut() {
                     variant="contained"
                     color="primary"
                     fullWidth
-                    disabled={false}
+                    disabled={signUpLoading}
                   >
                     Inscrever
                   </Button>

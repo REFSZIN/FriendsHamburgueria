@@ -2,6 +2,42 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import useProducts from '../hooks/api/useProducts';
+
+export default function Suggestions() {
+  const { productsData } = useProducts();
+  console.log(productsData);
+  const categories = ['T1', 'T2'];
+  return (
+    <Main>
+      {categories.map((category) => (
+        <ConteinerProducts key={category}>
+          <Typography variant="h6" gutterBottom>
+            {category}
+          </Typography>
+          <Grid container spacing={1}>
+            {productsData.map((products) => (
+              <Grid key={products.id} item xs={12} sm={6} md={4}>
+                <SuggestionContainer category={products.category}>
+                  <SuggestionPaper>
+                    <SuggestionImg src={products.photoUrl} alt={products.name} />
+                    <SuggestionTitle>{products.name}</SuggestionTitle>
+                    <SuggestionDescription>{products.description}</SuggestionDescription>
+                    <SuggestionPrice>R${products.price}</SuggestionPrice>
+                    <SuggestionRating name="suggestion-rating" value={products.status} readOnly precision={0.5} />
+                    <SuggestionButton variant="contained" color="secondary">
+                      Adicionar ao carrinho
+                    </SuggestionButton>
+                  </SuggestionPaper>
+                </SuggestionContainer>
+              </Grid>
+            ))}
+          </Grid>
+        </ConteinerProducts>
+      ))}
+    </Main>
+  );
+}
 
 const SuggestionContainer = styled.div`
   width: 100%;
@@ -69,134 +105,3 @@ const Main = styled.div`
   margin-top: 90px;
   margin-bottom: 110px;
 `;
-
-function Suggestion({ name, status, photoUrl, price, description, category }) {
-  return (
-    <Grid item xs={12} sm={6} md={4}>
-      <SuggestionContainer category={category}>
-        <SuggestionPaper>
-          <SuggestionImg src={photoUrl} alt={name} />
-          <SuggestionTitle>{name}</SuggestionTitle>
-          <SuggestionDescription>{description}</SuggestionDescription>
-          <SuggestionPrice>R${price}</SuggestionPrice>
-          <SuggestionRating name="suggestion-rating" value={status} readOnly precision={0.5} />
-          <SuggestionButton variant="contained" color="secondary">
-            Adicionar ao carrinho
-          </SuggestionButton>
-        </SuggestionPaper>
-      </SuggestionContainer>
-    </Grid>
-  );
-}
-
-export default function Suggestions() {
-  const suggestions = [
-    {
-      id: 1,
-      name: 'Hamburguer Tradicional',
-      status: 5,
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 10,
-      category: 'T2',
-      description: 'Um delicioso hamburguer com carne, queijo, alface e tomate.',
-      createdAt: '2023-03-28T00:00:00.000Z',
-      updatedAt: '2023-03-28T00:00:00.000Z',
-    },
-    {
-      id: 2,
-      name: 'Hamburguer Vegetariano',
-      status: 1,
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 12,
-      category: 'T2',
-      description: 'Um delicioso hamburguer vegetariano com cogumelos e queijo.',
-      createdAt: '2023-03-27T00:00:00.000Z',
-      updatedAt: '2023-03-27T00:00:00.000Z',
-    },
-    {
-      id: 3,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-    {
-      id: 4,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-    {
-      id: 3,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-    {
-      id: 3,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-    {
-      id: 3,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-    {
-      id: 3,
-      name: 'Batata Frita',
-      status: 4,
-      category: 'T1',
-      photoUrl: 'https://i.im.ge/2023/03/29/I2Ntif.AQUELE-TUDO-2T-IFOOD.png',
-      price: 5,
-      description: 'Batata frita crocante e deliciosa.',
-      createdAt: '2023-03-26T00:00:00.000Z',
-      updatedAt: '2023-03-26T00:00:00.000Z',
-    },
-  ];
-
-  const categories = ['T1', 'T2'];
-  
-  return (
-    <Main>
-      {categories.map((category) => (
-        <ConteinerProducts key={category}>
-          <Typography variant="h6" gutterBottom>
-            {category}
-          </Typography>
-          <Grid container spacing={1}>
-            {suggestions.filter((suggestion) => suggestion.category === category).map((suggestion) => (
-              <Suggestion key={suggestion.id} {...suggestion} />
-            ))}
-          </Grid>
-        </ConteinerProducts>
-      ))}
-    </Main>
-  );
-}

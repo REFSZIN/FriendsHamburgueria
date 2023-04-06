@@ -1,19 +1,18 @@
-import useToken from '../useToken';
+import * as productsApi from '../../services/productApi';
 import useAsync from '../useAsync';
 
-import * as productsApi from '../../services/productApi';
-
-export default function useSaveBooking() {
-  const token = useToken();
+export default function useProducts() {
   const {
-    loading: saveProductsLoading,
-    error: saveProductsError,
-    act: saveProducts
-  } = useAsync((data) => productsApi.saveProducts(data, token), false);
+    loading: productsLoading,
+    error: productsError,
+    act: productsData,
+    data: products
+  } = useAsync(productsApi.getProductInformations);
 
   return {
-    saveProductsLoading,
-    saveProductsError,
-    saveProducts
+    productsLoading, 
+    productsError,
+    productsData,
+    products
   };
 }

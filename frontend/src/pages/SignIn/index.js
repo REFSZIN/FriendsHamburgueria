@@ -10,12 +10,14 @@ import { getAuth, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import { Container, Typography, TextField, Button } from '@material-ui/core';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import useSignIn from '../../hooks/api/useSignIn';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const provider = new GithubAuthProvider();
   const navigate = useNavigate();
+  const { signInLoading, signIn } = useSignIn();
 
   async function submitGithub(event) {
     const auth = getAuth();
@@ -35,6 +37,7 @@ export default function SignIn() {
   async function submit(event) {
     event.preventDefault();
     try {
+      await signIn(email, password);
       navigate('/');
       toast('Login realizado com sucesso!');
     } catch (err) {
@@ -51,7 +54,7 @@ export default function SignIn() {
         <form onSubmit={submit}>
           <TextField label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
           <TextField label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={false}>Entrar</Button>
+          <Button type="submit" variant="contained" color="primary" fullWidth disabled={signInLoading}>Entrar</Button>
         </form>
         <Button onClick={submitGithub} variant="contained" color="secondary" fullWidth disabled={false}><FaGithub></FaGithub> Github</Button>
         <Typography variant="body">

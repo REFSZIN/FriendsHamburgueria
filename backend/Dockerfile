@@ -1,6 +1,10 @@
-FROM node:16.15
-WORKDIR /usr/src/friends
-COPY ./package*.json ./
-COPY ./.husky ./
-RUN npm install
+WORKDIR /src/usr/
+
 COPY . .
+
+EXPOSE 5000
+
+RUN npm i
+RUN npm run build
+
+CMD ["npm", "start"]

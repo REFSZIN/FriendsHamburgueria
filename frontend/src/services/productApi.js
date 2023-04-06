@@ -1,12 +1,7 @@
 import api from './api';
 
-export async function getProductInformations(body, token) {
-  const response = await api.get('/products', body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+export async function getProductInformations() {
+  const response = await api.get('/products');
   return response.data;
 }
 
