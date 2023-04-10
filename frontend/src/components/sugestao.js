@@ -6,6 +6,7 @@ import { Rating } from '@material-ui/lab';
 const SuggestionContainer = styled.div`
   width: 100%;
   margin: 20px 0;
+  height: max-content;
 `;
 
 const SuggestionPaper = styled(Paper)`
@@ -106,7 +107,7 @@ export default function Suggestions() {
     },
   ];
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className='footerspace'>
       {suggestions.map((suggestion) => (
         <Suggestion key={suggestion.id} {...suggestion} />
       ))}

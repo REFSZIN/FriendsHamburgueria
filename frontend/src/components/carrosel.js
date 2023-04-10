@@ -38,17 +38,15 @@ export default function Carrossel() {
 const CarrosselContainer = styled.div`
   width: 100%;
   height: 300px;
+  z-index: -1;
   margin-top: 90px;
-
-  @media (max-width: 768px) {
-    height: calc(100vw);
-  }
 `;
 
 const CarrosselItem = styled(Paper)`
   img {
-    width: 100%;
+    width: 100vw;
     height: 280px;
     object-fit: cover;
+    aspect-ratio: 16/9;
   }
 `;
