@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 500px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 32px;
+  background-color: #0000; /* Pale yellow background color to match Friends branding */
+  border-radius: 8px;
 `;
 
 const Label = styled.label`
   font-weight: bold;
+  color: #007bff; /* Blue label color to match Friends branding */
+  font-size: 24px;
 `;
 
 const Input = styled.input`
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
   padding: 8px;
-  font-size: 16px;
+  font-size: 18px;
+  background-color: #f5f5f5; /* Light gray input background color */
 `;
 
 const Button = styled.button`
@@ -25,10 +31,12 @@ const Button = styled.button`
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 16px;
+  padding: 16px;
+  font-size: 24px;
   cursor: pointer;
+  margin-top: 16px;
 `;
+
 const Main = styled.section`
   margin-top: 90px;
 `;

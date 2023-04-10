@@ -10,7 +10,7 @@ export async function productsById(req: Request, res: Response) {
     if (!product) {
       return res.status(httpStatus.NOT_FOUND).json({ error: "Product not found" });
     }
-    return res.status(httpStatus.CREATED).json({
+    return res.status(httpStatus.OK).json({
       product
     });
   } catch (error) {
@@ -24,7 +24,7 @@ export async function productsById(req: Request, res: Response) {
 export async function productsGet(req: Request, res: Response) {
   try {
     const products = await productsService.getProducts();
-    return res.status(httpStatus.CREATED).json({
+    return res.status(httpStatus.OK).json({
       products
     });
   } catch (error) {
@@ -73,7 +73,7 @@ export async function productsDelete(req: AuthenticatedRequest, res: Response) {
   const { productid } = req.body;
   try {
     const productDeleted = await productsService.productsDelete( productid, userId );
-    return res.status(httpStatus.CREATED).json({
+    return res.status(httpStatus.OK).json({
       productDeleted
     });
   } catch (error) {

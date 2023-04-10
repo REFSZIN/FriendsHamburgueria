@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './contexts/UserContext';
+import { CartProvider } from './contexts/CartContext';
 import useToken from './hooks/useToken';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -38,36 +39,38 @@ export default function App() {
   return (
     <>
       <ToastContainer />
-      <UserProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sobre" element={<Sobre />} />
-            <Route path="/cadastro" element={<SignOut />} />
-            <Route path="/cardapio" element={<Cardapio />} />
-            <Route path="/meuspedidos" element={<Pedidos />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/login" element={<SignIn />} />
-            <Route
-              path="/painel"
-              element={
-                <ProtectedRouteGuardAdmin>
-                  <Painel />
-                </ProtectedRouteGuardAdmin>
-              }
-            />
-            <Route
-              path="/carrinho"
-              element={
-                <ProtectedRouteGuard>
-                  <Cart />
-                </ProtectedRouteGuard>
-              }
-            />
-            <Route index path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
-      </UserProvider>
+      <CartProvider>
+        <UserProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/sobre" element={<Sobre />} />
+              <Route path="/cadastro" element={<SignOut />} />
+              <Route path="/cardapio" element={<Cardapio />} />
+              <Route path="/meuspedidos" element={<Pedidos />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/login" element={<SignIn />} />
+              <Route
+                path="/painel"
+                element={
+                  <ProtectedRouteGuardAdmin>
+                    <Painel />
+                  </ProtectedRouteGuardAdmin>
+                }
+              />
+              <Route
+                path="/carrinho"
+                element={
+                  <ProtectedRouteGuard>
+                    <Cart />
+                  </ProtectedRouteGuard>
+                }
+              />
+              <Route index path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Router>
+        </UserProvider>
+      </CartProvider>
     </>
   );
 }
@@ -86,6 +89,9 @@ function ProtectedRouteGuardAdmin({ children }) {
   const token = useToken();
   const type = useType();
   if (!token) {
+    return <Navigate to="/login" />;
+  }
+  if (type !== 999) {
     return <Navigate to="/login" />;
   }
   return <>

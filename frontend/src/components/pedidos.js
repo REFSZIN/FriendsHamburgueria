@@ -1,48 +1,63 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
-const Suggestion = ({ name, description, price, photoUrl, status }) => {
-  // Adicione aqui a lógica do componente Suggestion
-  return <div>{name}</div>;
-};
-
 const PontosFidelidade = ({ pontosFidelidade }) => {
-  // Adicione aqui a lógica para exibir os pontos de fidelidade do usuário
+  // Add logic for displaying user loyalty points here
   return (
-    <div>
-      <h2>Pontos de Fidelidade</h2>
-      <p>Você tem {pontosFidelidade} pontos de fidelidade. A cada compra você ganha mais pontos que podem ser trocados por descontos.</p>
-    </div>
+    <PointsContainer>
+      <PointsHeading>Pontos de Fidelidade</PointsHeading>
+      <PointsText>Você tem {pontosFidelidade} pontos de fidelidade. A cada compra você ganha mais pontos que podem ser trocados por descontos.</PointsText>
+    </PointsContainer>
   );
 };
 
 const PedidosAnteriores = ({ pedidosAnteriores }) => {
-  // Adicione aqui a lógica para exibir os pedidos anteriores do usuário
+  // Add logic for displaying user's previous orders here
   return (
-    <div>
-      <h2>Pedidos Anteriores</h2>
-      <ul>
-        {pedidosAnteriores.map(pedido => (
-          <li key={pedido.id}>{pedido.nome} - {pedido.preco}</li>
-        ))}
-      </ul>
-    </div>
+    <PreviousOrdersContainer>
+      <PreviousOrdersHeading>Pedidos Anteriores</PreviousOrdersHeading>
+      {pedidosAnteriores.length === 0 ? (
+        <NoOrdersText>Você ainda não fez nenhum pedido.</NoOrdersText>
+      ) : (
+        <OrdersList>
+          {pedidosAnteriores.map((pedido) => (
+            <Order key={pedido.id}>
+              <OrderInfo>
+                <OrderName>{pedido.nome}</OrderName>
+                <OrderPrice>R${pedido.preco.toFixed(2)}</OrderPrice>
+              </OrderInfo>
+              <OrderStatus status={pedido.status}>
+                {pedido.status === 0 ? 'Em andamento' : 'Finalizado'}
+              </OrderStatus>
+            </Order>
+          ))}
+        </OrdersList>
+      )}
+    </PreviousOrdersContainer>
   );
 };
 
 export default function Pedidos() {
-  // Adicione aqui a lógica para armazenar os dados de pedidos anteriores e pontos de fidelidade
-  const [pedidosAnteriores, setPedidosAnteriores] = useState([
-    { id: 1, nome: 'Hamburguer com cheddar e bacon', preco: 15.99 },
-    { id: 2, nome: 'Batata frita', preco: 8.99 },
-    { id: 3, nome: 'Refrigerante', preco: 5.99 }
+  // Add logic for storing user's previous orders and loyalty points data
+  const [pedidosAnteriores] = useState([
+    {
+      id: 1,
+      nome: 'Pizza de Calabresa',
+      preco: 29.9,
+      status: 1,
+    },
+    {
+      id: 2,
+      nome: 'Refrigerante Lata',
+      preco: 4.5,
+      status: 0,
+    },
   ]);
-  const [pontosFidelidade, setPontosFidelidade] = useState(100);
+  const [pontosFidelidade] = useState(100);
 
   return (
-    <Main>
+    <MainContainer>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={4}>
           <PontosFidelidade pontosFidelidade={pontosFidelidade} />
@@ -51,10 +66,94 @@ export default function Pedidos() {
           <PedidosAnteriores pedidosAnteriores={pedidosAnteriores} />
         </Grid>
       </Grid>
-    </Main>
+    </MainContainer>
   );
 }
 
-const Main = styled.section`
-  margin-top: 80px;
+const PreviousOrdersContainer = styled.div`
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 16px;
+`;
+
+const PreviousOrdersHeading = styled.h2`
+  color: #1a1a1a;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px;
+`;
+
+const NoOrdersText = styled.p`
+  color: #666666;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+`;
+
+const OrdersList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const Order = styled.li`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+`;
+
+const OrderInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const OrderName = styled.p`
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px;
+`;
+
+const OrderPrice = styled.p`
+  color: #666666;
+  font-size: 16px;
+  margin: 0;
+`;
+
+const OrderStatus = styled.div`
+  background-color: ${(props) =>
+    props.status === 0 ? '#ffbf00' : '#8bc34a'};
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 8px 16px;
+`;
+
+const PointsContainer = styled.div`
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 16px;
+`;
+
+const PointsHeading = styled.h2`
+  color: #1a1a1a;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px;
+`;
+
+const PointsText = styled.p`
+  color: #666666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+`;
+
+const MainContainer = styled.div`
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 24px;
+  margin-top: 100px;
 `;

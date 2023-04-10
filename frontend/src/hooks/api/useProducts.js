@@ -5,14 +5,11 @@ export default function useProducts() {
   const {
     loading: productsLoading,
     error: productsError,
-    act: productsData,
-    data: products
+    data: productsData,
   } = useAsync(productsApi.getProductInformations);
-
   return {
     productsLoading, 
     productsError,
     productsData,
-    products
   };
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import LogoImg from '../../assets/images/friends.png';
 import { useNavigate, Link } from 'react-router-dom';
@@ -11,8 +11,10 @@ import { Container, Typography, TextField, Button } from '@material-ui/core';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import useSignIn from '../../hooks/api/useSignIn';
+import UserContext from '../../contexts/UserContext';
 
 export default function SignIn() {
+  const { setUserData } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const provider = new GithubAuthProvider();
@@ -37,8 +39,9 @@ export default function SignIn() {
   async function submit(event) {
     event.preventDefault();
     try {
-      await signIn(email, password);
-      navigate('/');
+      const userData = await signIn(email, password);
+      setUserData(userData);
+      navigate('/dashboard');
       toast('Login realizado com sucesso!');
     } catch (err) {
       toast('Não foi possível fazer o login!');
@@ -57,7 +60,7 @@ export default function SignIn() {
           <Button type="submit" variant="contained" color="primary" fullWidth disabled={signInLoading}>Entrar</Button>
         </form>
         <Button onClick={submitGithub} variant="contained" color="secondary" fullWidth disabled={false}><FaGithub></FaGithub> Github</Button>
-        <Typography variant="body">
+        <Typography variant="overline">
           Não possui login? <Link to="/cadastro">Inscreva-se</Link>
         </Typography>
       </SignInContainer>

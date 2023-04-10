@@ -4,8 +4,16 @@ import { Grid, Typography } from '@material-ui/core';
 import Image2 from '../assets/images/cross.png';
 import Image3 from '../assets/images/LOGO.png';
 
-const SobreContainer = styled.div`
+const Main = styled.section`
+  margin-top: 80px;
+`;
+
+const SobreContainer = styled(Grid)`
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const SobreTitle = styled(Typography)`
@@ -21,19 +29,16 @@ const SobreText = styled(Typography)`
 `;
 
 const SobreImg = styled.img`
-  width: 50%;
-  height: 400px;
+  max-width: 100%;
+  height: auto;
   margin-bottom: 20px;
 `;
-const Main = styled.section`
-  margin-top: 80px;
-`;
 
-export default function Sobre() {
+const Sobre = () => {
   return (
     <Main>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={12} sm={10} md={8} lg={6}>
           <SobreContainer>
             <SobreTitle>Conheça a Friends Hamburgueria</SobreTitle>
             <SobreText>
@@ -52,4 +57,6 @@ export default function Sobre() {
       </Grid>
     </Main>
   );
-}
+};
+
+export default Sobre;

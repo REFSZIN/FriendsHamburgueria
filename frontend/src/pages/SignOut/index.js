@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import {
@@ -13,14 +13,17 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import styled from 'styled-components';
 import useSignUp from '../../hooks/api/useSignUp';
+import useSignIn from '../../hooks/api/useSignIn';
+import UserContext from '../../contexts/UserContext';
 
 export default function SignOut() {
+  const { setUserData } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
   const { signUpLoading, signUp } = useSignUp();
-
+  const { signIn } = useSignIn();
   async function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirmPassword) {
@@ -28,11 +31,23 @@ export default function SignOut() {
     } else {
       try {
         await signUp(email, password);
-        toast('Inscrito com sucesso! Por favor, faça login.');
+        nextLogin(email, password);
+        toast('Inscrito com sucesso!');
         navigate('/sign-in');
       } catch (error) {
         toast('Não foi possível fazer o cadastro!');
       }
+    }
+  };
+  async function nextLogin(event) {
+    event.preventDefault();
+    try {
+      const userData = await signIn(email, password);
+      setUserData(userData);
+      navigate('/dashboard');
+      toast('Login realizado com sucesso!');
+    } catch (err) {
+      toast('Não foi possível fazer o login!');
     }
   };
 

@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Logo from '../assets/images/LOGO.png';
 import styled from 'styled-components';
 import { ShoppingCart, Person, RestaurantMenu } from '@material-ui/icons';
 import { FaUser, FaCog } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import UserContext from '../contexts/UserContext';
+import { toast } from 'react-toastify';
 export default function Header() {
+  const { setUserData, userData } = useContext(UserContext);
+  function Logout() {
+    try {
+      const newUserData = { user: { type: 0 } };
+      setUserData(newUserData);
+      localStorage.setItem('userData', JSON.stringify(newUserData));
+      toast('Logout realizado com sucesso!');
+    } catch (error) {
+      toast('Não foi possível fazer o Logout!');
+    }
+  }
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -26,35 +38,47 @@ export default function Header() {
             Sobre
           </Link>
         </NavItem>
-        <NavItem>
-          <Link to="/meuspedidos">
-            <ShoppingCart />
-          Pedidos
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/perfil">
-            <Person />
-          Meu Perfil
-          </Link>
-        </NavItem>
+        { userData.token ?
+          <>
+            <NavItem>
+              <Link to="/meuspedidos">
+                <ShoppingCart />
+              Pedidos
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/perfil">
+                <Person />
+              Meu Perfil
+              </Link>
+            </NavItem> 
+          </> : <></>}
       </NavContainer>
       <SearchContainer>
-        <NavItem>
-          <Link to="/login">
-            <FaUser />
-            LOGIN
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/painel">
-            <FaCog />
-            PAINEL
-          </Link>
-        </NavItem>
+        {!userData.token ? 
+          <NavItem>
+            <Link to="/login">
+              <FaUser />
+              LOGIN
+            </Link>
+          </NavItem>:<></>}
+        {userData.token ? 
+          <NavItem onClick={Logout}>
+            <Link to="/">
+              <FaUser />
+              LOGOUT
+            </Link>
+          </NavItem>:<></>}
+        {userData.user.type === 999 ? 
+          <NavItem>
+            <Link to="/painel">
+              <FaCog />
+              PAINEL
+            </Link>
+          </NavItem>:<></>}
         <Link to="/carrinho">
           <SearchButton> 
-            <ShoppingCart />
+            <ShoppingCart/>
             Carrinho
           </SearchButton>
         </Link>
