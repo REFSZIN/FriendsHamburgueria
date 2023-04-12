@@ -12,6 +12,9 @@ body {
   font-family: 'Inter', sans-serif;
   font-family: 'Montserrat', sans-serif;
   font-family: 'Permanent Marker', cursive;
+  background-image: url("https://burgers.bombeef.com.br/images/backgrounds/faixa6.png");
+  background-size: cover;
+  background-position: center;
 }
 
 svg{
@@ -21,5 +24,11 @@ ul{
   background-color: black;
 }
 .footerspace{
-  margin-bottom: 220px !important;
+  margin-bottom: 150px !important;
+}
+
+@media (min-width:320px) and (max-width: 1000px){
+  .footerspace{
+    margin-bottom: 480px !important;
+  }
 }

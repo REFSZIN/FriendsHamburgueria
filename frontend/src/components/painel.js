@@ -52,7 +52,6 @@ const AdminPanel = () => {
   const handleNavSelection = (navOption) => {
     setSelectedNav(navOption);
   };
-
   return (
     <Main className={classes.root}>
       <AppBar position='fixed' className={classes.appBar}>
@@ -83,7 +82,7 @@ const AdminPanel = () => {
           <Divider />
         </div>
       </Drawer>
-      <Main className={classes.content}>
+      <Main className={classes.content} id="admin-container">
         <Toolbar />
       </Main>
     </Main>

@@ -10,21 +10,21 @@ async function main() {
         {
           name: "Product 1",
           price: 10,
-          photoUrl: "https://example.com/product1.jpg",
+          photoUrl: "https://i.im.ge/2023/04/12/LQIjMX.AQUELE-C-BACON-2T-IFOOD.png",
           description: "This is product 1",
           category: "T1",
         },
         {
           name: "Product 2",
           price: 20,
-          photoUrl: "https://example.com/product2.jpg",
+          photoUrl: "https://i.im.ge/2023/04/12/LQIjMX.AQUELE-C-BACON-2T-IFOOD.png",
           description: "This is product 2",
           category: "T1",
         },
         {
           name: "Product 3",
           price: 30,
-          photoUrl: "https://example.com/product3.jpg",
+          photoUrl: "https://i.im.ge/2023/04/12/LQIjMX.AQUELE-C-BACON-2T-IFOOD.png",
           description: "This is product 3",
           category: "T2",
         }

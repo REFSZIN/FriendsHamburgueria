@@ -12,8 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import CartContext from '../contexts/CartContext';
 
 export default function Header() {
+  const { cartData } = useContext(CartContext);
   const { setUserData, userData } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -97,7 +99,13 @@ export default function Header() {
           <Link to="/carrinho">
             <SearchButton> 
               <ShoppingCart/>
-              Carrinho
+              {cartData.products.length > 0 ?              
+                <NavItem>
+                    Items {cartData.products.length}
+                </NavItem>:             
+                <NavItem>
+                    Carrinho
+                </NavItem>}
             </SearchButton>
           </Link>
         </SearchContainer>
@@ -123,6 +131,7 @@ export default function Header() {
           </Tooltip>
           <Link to="/carrinho">
             <SearchButton> 
+              <NavItem>{cartData.products.length}</NavItem>
               <ShoppingCart/>
             </SearchButton>
           </Link>
@@ -152,8 +161,8 @@ export default function Header() {
                 display: 'block',
                 position: 'relative',
                 top: 0,
-                right: 14,
-                width: 10,
+                right: 0,
+                width: 1000,
                 height: 10,
                 transform: 'translateY(-50%) rotate(45deg)',
                 zIndex: 0,
@@ -234,7 +243,7 @@ const HeaderContainer = styled.header`
 	backdrop-filter: blur(10px);
   margin-top: -10px;
   z-index: 2;
-  @media (max-width: 600px){
+  @media (max-width: 400px){
   justify-content: center
 }
 `;
@@ -277,8 +286,12 @@ const NavItem = styled.h3`
   color: #555;
   margin: 0 10px;
   cursor: pointer;
+  font-family: "Lexend Deca", sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Permanent Marker', cursive;
   &:hover {
-    color: #000;
+    color: #fff;
   }
 `;
 
@@ -297,6 +310,9 @@ const SearchButton = styled.button`
   cursor: pointer;
   &:hover {
     background-color: #e53935;
+  }
+  h3:hover {
+    color: #fff;
   }
   @media (max-width: 400px){
   padding: 1px 2px;

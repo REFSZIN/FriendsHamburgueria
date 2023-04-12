@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import React, { useContext } from 'react';
 import useProducts from '../hooks/api/useProducts';
 import CartContext from '../contexts/CartContext';
 
@@ -35,7 +35,7 @@ export default function Suggestions() {
     <Main>
       <Grid container spacing={1}>
         {productsData.products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4}>
+          <Grid key={product.id} item xs={12} sm={6} md={4}> 
             <SuggestionContainer category={product.category}>
               <SuggestionPaper>
                 <SuggestionImg src={product.photoUrl} alt={product.name} />
@@ -87,6 +87,8 @@ const Addition = styled.div`
 
 const AdditionCheckbox = styled.input`
   margin-right: 10px;
+  height: 90px;
+  width: 100%;
 `;
 
 const AdditionName = styled.label`

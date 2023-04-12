@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import Logo from '../assets/images/friends.png';
 
 export default function Footer() {
   return (
@@ -19,9 +20,16 @@ export default function Footer() {
         </SocialIconsContainer>
       </SocialContainer>
       <LocationContainer>
+        <LocationTitle>Horarios:</LocationTitle>
+        <LocationText>
+          👉 Horário: Terça a Domingo 18:30 as 23:45
+        </LocationText>
+      </LocationContainer>
+      <Logos src={Logo} alt='a'></Logos>
+      <LocationContainer>
         <LocationTitle>Endereço:</LocationTitle>
         <LocationText>
-          R. Rosa Sffeir, 691 - Grajaú, Juiz de Fora - MG
+          R. Rosa Sffeir, 693 - Grajaú, Juiz de Fora - MG
         </LocationText>
       </LocationContainer>
       <ContactContainer>
@@ -29,16 +37,17 @@ export default function Footer() {
         <ContactText>
           Telefone: (32) 98805-9192
           <br />
-          Email: contato@friendshamburgueriajf.com.br
+          Email: friendsburgjf@gmail.com
         </ContactText>
       </ContactContainer>
+      
     </FooterContainer>
   );
 }
 
 const FooterContainer = styled.footer`
-  background-color: #fff;
-  color: black;
+  background-color: #181A1B;
+  color: #fff;
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -50,8 +59,27 @@ const FooterContainer = styled.footer`
   position: absolute;
   bottom: 0;
   @media (max-width: 900px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
+  }
+`;
+
+const Logos = styled.img`
+  margin-right: 50px;
+  width: 200px;
+  height: 150px;
+  background-color:#fff;
+  border:1px solid red;    
+  height:100px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  width:100px;
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    text-align: center;
+    margin-top: 30px;
+    margin-right: 20px;
   }
 `;
 
@@ -65,6 +93,7 @@ const SocialContainer = styled.div`
   @media (max-width: 900px) {
     margin-right: 20px;
     margin-bottom: 0px;  
+    margin-top: 20px;
     flex: 0;
   }
 `;
@@ -81,7 +110,7 @@ const SocialIconsContainer = styled.div`
 `;
 
 const SocialIcon = styled.a`
-  color: #000;
+  color: #fff;
   font-size: 24px;
   margin: 0 10px;
   cursor: pointer;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="description" content="Seja bem-vindo ao sabor e suculência a cada mordida da Friends Hamburgueria 🍔">
     <meta name="keywords" content="NodeJs + Typescript para API, Jest para testes de int e unit, Prisma ORM para PostgreSQL e ReactJs + StyledComponents para o frontend.">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="white">
     <meta name="author" content="https://github.com/REFSZIN/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,6 +18,18 @@
     <title>Friends 🍔 Hamburgueria</title>
   </head>
   <body>
+    <script async src="https://widgets.ifood.com.br/widget.js">iFoodWidget.show();</script>
+    <script>
+      window.addEventListener('load', () => {
+        iFoodWidget.init({
+          widgetId: '2eac9b52-92dd-4e91-9d99-abd3b3a6b62d',
+          merchantIds: [
+          '94b6878e-f5dd-4ef1-9915-851853e1ab24'
+          ],containerSelector: '#admin-container',
+
+        });
+      });
+    </script>
     <noscript>Você precisa habilitar JavaScript para poder utilizar esta página.</noscript>
     <side id="root"></side>
   </body>
