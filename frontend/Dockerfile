@@ -1,5 +1,5 @@
-# evitar problema de routines error:0308010C:digital envelope routines::unsupported
-FROM node:latest
+# busca a versão latest do node
+FROM node:18.14.0
 
 # pasta para onde vai o build
 WORKDIR /tmp/react

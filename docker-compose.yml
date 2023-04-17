@@ -25,13 +25,12 @@ services:
     build: ./frontend
     volumes:
       - react-volume:/var/www/html
-    env_file:
-      - frontend/.env
-  nginx_app:
-    container_name: nginx_app
+
+  nginx:
+    container_name: nginx
     build: ./nginx
     ports:
-      - 8080:80
+      - 80:80
     volumes:
       - react-volume:/var/www/html
     depends_on:
