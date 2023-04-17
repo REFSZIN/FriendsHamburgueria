@@ -1,8 +1,11 @@
-# busca imagem base do nginx (use :VERSAO se for necessário)
-FROM nginx
+# Define the base image
+FROM nginx:latest
 
-# removendo a configuraçao padrão
+# Remove the default configuration file
 RUN rm /etc/nginx/conf.d/default.conf
 
-# copiando a configuração nova
-COPY nginx.conf /etc/nginx/conf.d
+# Copy the custom configuration file to the container
+COPY nginx.conf /etc/nginx/conf.d/
+
+# Expose port 80 for incoming traffic
+EXPOSE 80
