@@ -4,12 +4,8 @@ import { FaUser } from 'react-icons/fa';
 import useAddress from '../hooks/api/useAddress';
 
 const Perfil = () => {
-  const { postsaveAddreesLoading,
-    postsaveAddreesError,
-    postsaveAddrees,
-    getsaveAddrees,
-    getsaveAddreesError,
-    getsaveAddreesLoading } = useAddress();
+  // eslint-disable-next-line no-empty-pattern
+  const {  } = useAddress();
     
   const [formData, setFormData] = useState({
     name: '',

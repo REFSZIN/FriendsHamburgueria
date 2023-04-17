@@ -25,7 +25,11 @@ services:
     build: ./frontend
     volumes:
       - react-volume:/var/www/html
-
+    depends_on:
+      - node
+    env_file:
+      - frontend/.env
+    stdin_open: true
   nginx:
     container_name: nginx
     build: ./nginx

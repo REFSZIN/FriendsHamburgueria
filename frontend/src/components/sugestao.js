@@ -6,19 +6,19 @@ import useProducts from '../hooks/api/useProducts';
 import CartContext from '../contexts/CartContext';
 
 function Suggestion({ name, status, photoUrl, price, description }) {
-  const { addToCart, addAdditionToProduct, removeAdditionToProduct } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const product = { name, status, photoUrl, price, description };
   const handleAddToCart = (product) => {
     addToCart(product);
   };
 
-  const handleAdditionChange = (event, product, addition) => {
-    if (event.target.checked) {
-      addAdditionToProduct(product, addition);
-    } else {
-      removeAdditionToProduct(product, addition);
-    }
-  };
+  // const handleAdditionChange = (event, product, addition) => {
+  //   if (event.target.checked) {
+  //     addAdditionToProduct(product, addition);
+  //   } else {
+  //     removeAdditionToProduct(product, addition);
+  //   }
+  // };
 
   return (
     <Grid item xs={12} sm={6} md={4}>

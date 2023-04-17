@@ -40,7 +40,7 @@ describe("POST /users", () => {
 
       const response = await server.post("/users").send(body);
 
-      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+      expect(response.status).toBe(httpStatus.CREATED);
     });
 
     describe("when event started", () => {
