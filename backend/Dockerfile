@@ -1,5 +1,5 @@
 # busca imagem base do node (use :VERSAO se for necessário)
-FROM node
+FROM node:18.14.0
 
 # usa essa pasta como diretório de trabalho (tipo um CD)
 WORKDIR /usr/src
