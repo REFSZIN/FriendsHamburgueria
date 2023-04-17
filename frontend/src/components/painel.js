@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Drawer,
@@ -49,11 +49,33 @@ const AdminPanel = () => {
   const classes = useStyles();
   const [selectedNav, setSelectedNav] = useState('produtos');
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://widgets.ifood.com.br/widget.js';
+    document.body.appendChild(script);
+    script.addEventListener('load', () => {
+      window.iFoodWidget.init({
+        widgetId: '2eac9b52-92dd-4e91-9d99-abd3b3a6b62d',
+        merchantIds: [
+          '94b6878e-f5dd-4ef1-9915-851853e1ab24'
+        ],
+        containerSelector: '#admin-container',
+      });
+    });
+    return () => {
+      document.body.removeChild(script);
+      window.location.reload();
+    };
+  }, [1]);
+
   const handleNavSelection = (navOption) => {
     setSelectedNav(navOption);
   };
+
   return (
     <Main className={classes.root}>
+      <script async src="https://widgets.ifood.com.br/widget.js"></script>
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <MenuIcon className={classes.menuButton} />

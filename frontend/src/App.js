@@ -22,15 +22,15 @@ import Cardapio from './pages/Cardapio';
 import Pedidos from './pages/Pedidos';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCcDocJmACaQnHwV7O7bxzHi45k9QWfBCU',
-  authDomain: 'drivent-38bdd.firebaseapp.com',
-  projectId: 'drivent-38bdd',
-  storageBucket: 'drivent-38bdd.appspot.com',
-  messagingSenderId: '1043691140799',
-  appId: '1:1043691140799:web:57a907c5a4a7ae1f69f80a'
+  apiKey: 'AIzaSyBwEcRwGiUAeP2undbRSLyJ5qvFxxS1uwM',
+  authDomain: 'friends-hamburgueria.firebaseapp.com',
+  projectId: 'friends-hamburgueria',
+  storageBucket: 'friends-hamburgueria.appspot.com',
+  messagingSenderId: '841283367970',
+  appId: '1:841283367970:web:6c563e527ff1a68350c67b',
+  measurementId: 'G-D0B92L4LF2'
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);

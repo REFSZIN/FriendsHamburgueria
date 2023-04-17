@@ -16,6 +16,14 @@ body {
   background-size: cover;
   background-position: center;
 }
+main {
+  background-image: url("https://burgers.bombeef.com.br/images/backgrounds/faixa6.png");
+  background-size: cover;
+  background-position: center;
+  background-size: 100vw auto;
+  background-size: cover;
+  background-position: center;
+}
 
 svg{
   margin-right: 4px;

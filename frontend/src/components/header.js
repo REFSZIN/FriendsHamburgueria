@@ -99,6 +99,8 @@ export default function Header() {
           <Link to="/carrinho">
             <SearchButton> 
               <ShoppingCart/>
+              <>
+              </>
               {cartData.products.length > 0 ?              
                 <NavItem>
                     Items {cartData.products.length}
@@ -186,7 +188,7 @@ export default function Header() {
                 Perfil
                 </Link>
               </NavItem> 
-            </MenuItem> : <></>}
+            </MenuItem> : <p></p>}
           <Divider />
           {userData.user.type === 999 ? 
             <MenuItem onClick={handleClose}>
@@ -196,7 +198,7 @@ export default function Header() {
                   PAINEL
                 </Link>
               </NavItem>
-            </MenuItem>:<></>}
+            </MenuItem>:<p></p>}
           <MenuItem onClick={handleClose}>
             {!userData.token ? 
               <NavItem>
@@ -204,14 +206,14 @@ export default function Header() {
                   <FaUser />
                   Login
                 </Link>
-              </NavItem>:<></>}
+              </NavItem>:<p></p>}
             {userData.token ? 
               <NavItem onClick={Logout}>
                 <Link to="/">
                   <FaPowerOff />
                   Sair
                 </Link>
-              </NavItem>:<></>}
+              </NavItem>:<p></p>}
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <NavItem>
@@ -243,7 +245,7 @@ const HeaderContainer = styled.header`
 	backdrop-filter: blur(10px);
   margin-top: -10px;
   z-index: 2;
-  @media (max-width: 400px){
+  @media (max-width: 350px){
   justify-content: center
 }
 `;

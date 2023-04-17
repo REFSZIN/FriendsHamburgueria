@@ -13,7 +13,6 @@ const PontosFidelidade = ({ pontosFidelidade }) => {
 };
 
 const PedidosAnteriores = ({ pedidosAnteriores }) => {
-  // Add logic for displaying user's previous orders here
   return (
     <PreviousOrdersContainer>
       <PreviousOrdersHeading>Pedidos Anteriores</PreviousOrdersHeading>

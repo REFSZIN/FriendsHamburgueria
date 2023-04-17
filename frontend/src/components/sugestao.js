@@ -119,7 +119,7 @@ const SuggestionPaper = styled(Paper)`
 
 const SuggestionImg = styled.img`
   width: 40%;
-  height: auto;
+  height: 200px;
   margin-bottom: 10px;
 `;
 
@@ -136,6 +136,7 @@ const SuggestionDescription = styled(Typography)`
   font-size: 16px;
   margin-top: 10px;
   color: white;
+  word-break: break-word;
 `;
 
 const SuggestionPrice = styled(Typography)`

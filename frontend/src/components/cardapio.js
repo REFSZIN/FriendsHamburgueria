@@ -5,19 +5,9 @@ import React, { useContext } from 'react';
 import useProducts from '../hooks/api/useProducts';
 import CartContext from '../contexts/CartContext';
 
-export default function Suggestions() {
-  const { productsLoading, productsError, productsData } = useProducts();
+function Suggestion({ name, status, photoUrl, price, description }) {
   const { addToCart, addAdditionToProduct, removeAdditionToProduct } = useContext(CartContext);
-
-  if (productsLoading) {
-    return <div>Loading...</div>;
-  }
-  if (productsError) {
-    return <div>Error: {productsError.message}</div>;
-  }
-  if (!productsData) {
-    return null;
-  }
+  const product = { name, status, photoUrl, price, description };
 
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -32,86 +22,92 @@ export default function Suggestions() {
   };
 
   return (
-    <Main>
-      <Grid container spacing={1}>
-        {productsData.products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4}> 
-            <SuggestionContainer category={product.category}>
-              <SuggestionPaper>
-                <SuggestionImg src={product.photoUrl} alt={product.name} />
-                <SuggestionTitle>{product.name}</SuggestionTitle>
-                <SuggestionDescription>{product.description}</SuggestionDescription>
-                <SuggestionPrice>R${product.price}</SuggestionPrice>
-                <SuggestionRating name="suggestion-rating" value={product.status} readOnly precision={0.5} />
-                <SuggestionAdditions>
-                  {product.additions.map((addition) => (
-                    <Addition key={addition.id}>
-                      <AdditionCheckbox
-                        onChange={(event) => handleAdditionChange(event, product, addition)}
-                      />
-                      <AdditionName>{addition.name}</AdditionName>
-                      <AdditionPrice>{addition.price}</AdditionPrice>
-                    </Addition>
-                  ))}
-                </SuggestionAdditions>
-                <SuggestionButton
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Adicionar ao carrinho
-                </SuggestionButton>
-              </SuggestionPaper>
-            </SuggestionContainer>
-          </Grid>
-        ))}
-      </Grid>
-    </Main>
+    <Grid item xs={12} sm={6} md={4}>
+      <SuggestionContainer>
+        <SuggestionPaper>
+          <SuggestionTitle>{name}</SuggestionTitle>
+          <SuggestionImg src={photoUrl} alt={name} />
+          <SuggestionDescription>{description}</SuggestionDescription>
+          <SuggestionPrice>R${price}</SuggestionPrice>
+          <SuggestionRating name="suggestion-rating" value={status} readOnly precision={0.5} />
+          <SuggestionButton variant="contained" color="secondary" onClick={() => handleAddToCart(product)} >
+            Adicionar ao carrinho
+          </SuggestionButton>
+        </SuggestionPaper>
+      </SuggestionContainer>
+    </Grid>
   );
 }
 
-const SuggestionAdditions = styled.div`
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  color: white;
-`;
+export default function Suggestions() {
+  const { productsLoading, productsError, productsData } = useProducts();
 
-const Addition = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-`;
+  if (productsLoading) {
+    return <div>Loading...</div>;
+  }
+  if (productsError) {
+    return <div>Error: {productsError.message}</div>;
+  }
+  if (!productsData) {
+    return null;
+  }
 
-const AdditionCheckbox = styled.input`
-  margin-right: 10px;
-  height: 90px;
-  width: 100%;
-`;
-
-const AdditionName = styled.label`
-  font-size: 14px;
-  margin-right: 5px;
-`;
-
-const AdditionPrice = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-`;
+  return (
+    <SugesMain>
+      <Title>Promoçoes</Title>
+      <Grid container spacing={3}>
+        {productsData.products.map((suggestion) => (
+          <Suggestion key={suggestion.id} {...suggestion} />
+        ))}
+      </Grid>
+      <Title>Aqueles</Title>
+      <Grid container spacing={3} className='footerspace'>
+        {productsData.products.map((suggestion) => (
+          <Suggestion key={suggestion.id} {...suggestion} />
+        ))}
+      </Grid>
+    </SugesMain>
+  );
+}
 
 const SuggestionContainer = styled.div`
+  border-radius: 10px / 20px;
   width: 100%;
   margin: 20px 0;
-  ${({ category }) =>
-    category === 'T1'
-      ? `
-        background-color: #1c1c1c;
-      `
-      : `
-        background-color: #f5f5f5;
-      `}
+  height: max-content;
+  flex-direction: column;
+  justify-content: center;
+	background: linear-gradient(180deg,rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.28));
+	backdrop-filter: blur(40px);
+  box-shadow:
+  2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+  6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+  12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+  22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+  41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+  100px 100px 80px rgba(0, 0, 0, 0.07);
+  @media (min-width:320px) and (max-width: 1000px){
+    margin-bottom: 20px !important;
+  }
+`;
+
+const SugesMain = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-top: 90px;
+`;
+
+const Title = styled.h2`
+  display:flex;
+  justify-content: center;
+  font-size: 40px;
+  width: 100%;
+  margin: 20px 0;
+  margin-left: 10px;
 `;
 
 const SuggestionPaper = styled(Paper)`
@@ -125,20 +121,24 @@ const SuggestionPaper = styled(Paper)`
 
 const SuggestionImg = styled.img`
   width: 40%;
-  height: auto;
+  height: 200px;
+  margin-bottom: 10px;
 `;
 
-const SuggestionTitle = styled(Typography)`
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
+const SuggestionTitle = styled.p`
+  font-size: 18px;
+  font-weight: small;
+  margin-bottom: 10px;
   color: white;
+  font-weight: 700;
+  margin: 10px 10px;
 `;
 
 const SuggestionDescription = styled(Typography)`
   font-size: 16px;
   margin-top: 10px;
   color: white;
+  word-break: break-word;
 `;
 
 const SuggestionPrice = styled(Typography)`
@@ -151,16 +151,10 @@ const SuggestionPrice = styled(Typography)`
 const SuggestionButton = styled(Button)`
   margin-top: 20px;
   color: white;
-  background-color: blue;
 `;
 
 const SuggestionRating = styled(Rating)`
   margin-top: 10px;
   color: white;
   margin-bottom: 10px;
-`;
-
-const Main = styled.div`
-  margin-top: 90px;
-  margin-bottom: 110px;
 `;

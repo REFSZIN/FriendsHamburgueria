@@ -1,6 +1,6 @@
 import api from './api';
 
-export async function getAddressInformations(body, token) {
+export async function getAddressInformations(token, body) {
   const response = await api.get('/address', body, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -102,6 +102,7 @@ const SocialTitle = styled.h4`
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 10px;
+  word-break: break-word;
 `;
 
 const SocialIconsContainer = styled.div`
@@ -131,12 +132,14 @@ const LocationContainer = styled.div`
 const LocationTitle = styled.h4`
   font-size: 18px;
   font-weight: 500;
+  word-break: break-word;
   margin-bottom: 10px;
 `;
 
 const LocationText = styled.p`
   font-size: 16px;
   margin: 0;
+  word-break: break-word;
   margin-right: 10px;
 `;
 
@@ -152,10 +155,12 @@ const ContactContainer = styled.div`
 const ContactTitle = styled.h4`
   font-size: 18px;
   font-weight: 500;
+  word-break: break-word;
   margin-bottom: 10px;
 `;
 
 const ContactText = styled.p`
   font-size: 16px;
+  word-break: break-word;
   margin: 0;
 `;
