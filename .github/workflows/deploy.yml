@@ -1,8 +1,8 @@
+name: Build and Deploy on AWS
 on:
   push:
     branches:
       - main
-name: Build and Deploy on AWS
 jobs:
   build:
     runs-on: self-hosted
@@ -29,6 +29,8 @@ jobs:
           file_name: .env
           fail_on_empty: true
       - name: Build 
-        run: docker compose build
+        run:
+          timeout-minutes: 10
+          command: docker-compose build
       - name: Run
-        run: docker compose stop && docker compose up -d
+        run: docker-compose stop && docker-compose up -d
