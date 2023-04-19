@@ -5,7 +5,7 @@
 <h1 align="center">
    Friends Hamburgueria - Frontend
 </h1>
-Seja bem-vindo ao sabor e suculência a cada mordida da Friends Hamburgueria
+Seja bem-vindo ao sabor e suculência a  cada mordida da Friends Hamburgueria
 <hr>
   <h3>Built With</h3>
   <img src="https://img.shields.io/badge/Postgres-316192?style=for-the-badge&logo=Postgresql&logoColor=white" height="30px"/>
