@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   postgres:
     image: postgres
@@ -19,17 +21,24 @@ services:
       - postgres
     env_file:
       - backend/.env
+    volumes:
+      - node-modules:/app/node_modules
+      - backend:/app
+    command: npm run start
 
   react:
     container_name: react
     build: ./frontend
     volumes:
-      - react-volume:/var/www/html
+      - react-volume:/usr/share/nginx/html
     depends_on:
       - node
     env_file:
       - frontend/.env
     stdin_open: true
+    ports:
+      - 3001:3000
+
   nginx:
     container_name: nginx
     build: ./nginx
@@ -37,6 +46,7 @@ services:
       - 80:80
     volumes:
       - react-volume:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - postgres
       - node
@@ -45,3 +55,5 @@ services:
 volumes:
   postgres-volume:
   react-volume:
+  node-modules:
+  backend:
