@@ -7,9 +7,6 @@ WORKDIR /usr/src
 # copia o diretório atual para o WORKDIR definido
 COPY . .
 
-# "expoe" a porta 5000
-EXPOSE 5000
-
 # baixa as dependências
 RUN npm i
 
