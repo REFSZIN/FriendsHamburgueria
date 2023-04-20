@@ -1,5 +1,5 @@
 # busca a versão latest do node
-FROM node:18.14.0
+FROM node:16
 
 # pasta para onde vai o build
 WORKDIR /tmp/react

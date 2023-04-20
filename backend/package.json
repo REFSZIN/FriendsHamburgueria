@@ -7,7 +7,8 @@
     "prebuild": "rm -rf dist",
     "build": "ttsc -p tsconfig.build.json",
     "prepare": "husky install",
-    "start": "npm run prisma:migrate:deploy && node dist/server.js",
+    "start": "npm run prisma:migrate:deploy && npm run seed && node dist/server.js",
+    "seed": "prisma db seed",
     "migration:run": "prisma migrate deploy",
     "migration:generate": "npm run dev:load-envs prisma migrate dev",
     "lint": "eslint .",
@@ -18,7 +19,7 @@
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
     "dev:migration:run": "npm run dev:load-envs prisma migrate deploy",
     "dev:migration:generate": "npm run dev:load-envs prisma migrate dev",
-    "dev:seed": "npm run dev:load-envs prisma db seed",
+    "dev:seed": "prisma db seed",
     "dev": "NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/server.ts' -e ts",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy"
@@ -35,7 +36,7 @@
   "author": "Yan Matheus",
   "license": "ISC",
   "prisma": {
-    "seed": "npm run dev:load-envs -- ts-node prisma/seed.ts"
+    "seed": "npx ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.3.1",
