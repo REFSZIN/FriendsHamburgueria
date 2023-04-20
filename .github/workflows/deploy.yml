@@ -31,4 +31,4 @@ jobs:
       - name: Build 
         run: docker compose build
       - name: Run
-        run: docker-compose stop && docker-compose up -d
+        run: docker-compose stop && docker-compose up -d --build
