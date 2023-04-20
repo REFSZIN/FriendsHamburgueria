@@ -23,9 +23,12 @@ services:
   react:
     container_name: react
     build: ./frontend
+    ports:
+      - 3000:3000
     volumes:
       - react-volume:/var/www/html
-
+    stdin_open: true
+    privileged: true
   nginx:
     container_name: nginx
     build: ./nginx
@@ -37,6 +40,7 @@ services:
       - postgres
       - node
       - react
+    privileged: true
 
 volumes:
   postgres-volume:
