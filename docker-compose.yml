@@ -48,7 +48,6 @@ services:
       - postgres
       - node
       - react
-    privileged: true
 
 volumes:
   postgres-volume:
