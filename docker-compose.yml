@@ -11,7 +11,7 @@ services:
       - backend/.env
     volumes:
       - postgres-volume:/var/lib/postgresql/data
-
+    privileged: true
   node:
     container_name: node
     build: ./backend
@@ -25,7 +25,7 @@ services:
       - node-modules:/app/node_modules
       - backend:/app
     command: npm run start
-
+    privileged: true
   react:
     container_name: react
     build: ./frontend
@@ -48,7 +48,7 @@ services:
       - postgres
       - node
       - react
-
+    privileged: true
 volumes:
   postgres-volume:
   react-volume:
