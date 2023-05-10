@@ -27,11 +27,9 @@ export function CartProvider({ children }) {
   const addToCart = (product) => {
     const existingItemIndex = cartData.products.findIndex((item) => item.id === product.id);
     if (existingItemIndex === -1) {
-      // Se o produto não existe no carrinho, adiciona um novo item com quantidade 1
       const updatedProducts = [...cartData.products, { ...product, quantity: 1, additions: [] }];
       setCartData({ ...cartData, products: updatedProducts });
     } else {
-      // Se o produto já existe no carrinh  o, aumenta a quantidade em 1
       const updatedProducts = [...cartData.products];
       updatedProducts[existingItemIndex].quantity += 1;
       setCartData({ ...cartData, products: updatedProducts });
@@ -42,24 +40,34 @@ export function CartProvider({ children }) {
   const addAdditionToProduct = (productId, addition) => {
     const updatedProducts = cartData.products.map((product) => {
       if (product.id === productId) {
-        const updatedAdditions = [...product.additions, addition];
-        return { ...product, additions: updatedAdditions };
+        const existingAddition = product.additions.find((add) => add.id === addition.id);
+
+        if (existingAddition) {
+          const updatedAdditions = product.additions.map((add) =>
+            add.id === addition.id ? { ...add, quantity: add.quantity + addition.quantity } : add
+          );
+          return { ...product, additions: updatedAdditions };
+        } else {
+          const updatedAdditions = [...product.additions, addition];
+          return { ...product, additions: updatedAdditions };
+        }
       } else {
         return product;
       }
     });
+
     setCartData({ ...cartData, products: updatedProducts });
     toast('Adicional Adicionado ao Produto!');
   };
 
   const removeAdditionToProduct = (productId, additionId) => {
     const updatedCartData = { ...cartData };
-    const productIndex = updatedCartData.findIndex((item) => item.id === productId);
+    const productIndex = updatedCartData.products.findIndex((item) => item.id === productId);
     if (productIndex !== -1) {
-      const product = updatedCartData[productIndex];
+      const product = updatedCartData.products[productIndex];
       const updatedAdditions = product.additions.filter((addition) => addition.id !== additionId);
       const updatedProduct = { ...product, additions: updatedAdditions };
-      updatedCartData[productIndex] = updatedProduct;
+      updatedCartData.products[productIndex] = updatedProduct;
       setCartData(updatedCartData);
       toast('Adicional Removido do Produto!');
     }

@@ -14,6 +14,7 @@ interface Address {
 interface AddressRepository {
   create(addressData: Address): Promise<address>;
   findById(addressId: number): Promise<address | null>;
+  find(userId: number): Promise<address[] | null>;
   update(addressId: number, updates: Partial<Omit<address, "id">>): Promise<address>;
   deleteById(addressId: number, userId: number): Promise<address | null>;
 }
@@ -32,10 +33,10 @@ const addressRepository: AddressRepository = {
     return createdAddress;
   },
 
-  async deleteById(addressId: number, userId: number): Promise<address> {
+  async deleteById(addressId: number): Promise<address> {
     const user = await prisma.address.findUnique({
       where: {
-        id: addressId
+        id: addressId,
       }
     });
     if (!user) {
@@ -51,6 +52,10 @@ const addressRepository: AddressRepository = {
 
   async findById(addressId: number): Promise<address | null> {
     const foundAddress = await prisma.address.findUnique({ where: { id: addressId } });
+    return foundAddress;
+  },
+  async find(userId: number): Promise<address[] | null> {
+    const foundAddress = await prisma.address.findMany({ where: { userId: userId } });
     return foundAddress;
   },
 

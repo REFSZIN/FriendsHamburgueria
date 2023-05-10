@@ -7,7 +7,9 @@ export default function Cardapio() {
   return (
     <Main>
       <Header/>
-      <CardapioComponent/>
+      <Component>
+        <CardapioComponent/>
+      </Component>
       <Footer/>
     </Main>
   );
@@ -24,4 +26,12 @@ const Main = styled.main`
   justify-content: flex-start;
   align-items: center;  
   position: absolute;
+`;
+const Component = styled.section`
+  @media (max-width: 600px) {
+  margin-bottom: 400px;
+  }
+  @media (min-width:320px) and (max-width: 900px){
+    margin-bottom: 500px !important;
+  }
 `;

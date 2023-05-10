@@ -16,6 +16,18 @@ export async function addressGet(req: Request, res: Response) {
     return res.status(httpStatus.BAD_REQUEST).send(error);
   }
 }
+export async function addressGetAll(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  try {
+    const address = await addressService.getAddress(userId);
+    if (!address) {
+      return res.status(httpStatus.NOT_FOUND).json({ error: "Address not found" });
+    }
+    return res.status(httpStatus.OK).json(address);
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).send(error);
+  }
+}
 export async function addressPost(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
   const { cep, street, city, state, number, neighborhood, addressDetail } = req.body;
@@ -43,13 +55,13 @@ export async function addressDelete(req: AuthenticatedRequest, res: Response) {
 
 export async function addressPut(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  const { cep, street, city, state, number, neighborhood, addressDetail, addressId } = req.body;
-  if (!cep || !street || !city || !state || !number || !neighborhood || !addressId)  {
+  const { cep, street, city, state, number, neighborhood, addressDetail, addressId, status } = req.body;
+  if (!cep || !street || !city || !state || !number || !neighborhood || !addressId || !status)  {
     return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ error: "Invalid input data" });
   }
   const address = parseInt(addressId);
   try {
-    const updatedAddress = await addressService.updateAddress(address, userId, { cep, street, city, state, number, neighborhood, addressDetail });
+    const updatedAddress = await addressService.updateAddress(address, userId, { cep, street, city, state, number, neighborhood, addressDetail, status });
     if (!updatedAddress) {
       return res.status(httpStatus.NOT_FOUND).json({ error: "Address not found" });
     }

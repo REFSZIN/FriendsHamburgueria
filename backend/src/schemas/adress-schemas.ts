@@ -1,6 +1,6 @@
 import { Address } from "@/services/adress-service";
 import Joi from "joi";
-interface AddressPut {
+export interface AddressPut {
   addressId: number;
   cep: string;
   street: string;
@@ -9,6 +9,7 @@ interface AddressPut {
   number: string;
   neighborhood: string;
   addressDetail?: string;
+  status: string;
 }
 
 export const createAdressSchema = Joi.object<Address>({

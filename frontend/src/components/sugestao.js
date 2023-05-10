@@ -1,24 +1,28 @@
 import styled from 'styled-components';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import useProducts from '../hooks/api/useProducts';
 import CartContext from '../contexts/CartContext';
 
-function Suggestion({ name, status, photoUrl, price, description }) {
-  const { addToCart } = useContext(CartContext);
-  const product = { name, status, photoUrl, price, description };
-  const handleAddToCart = (product) => {
-    addToCart(product);
+function Suggestion({ id, name, status, photoUrl, price, description, category }) {
+  const { cart, addToCart, removeFromCart } = useContext(CartContext);
+  const initialQuantity = cart ? cart.quantity : 0;
+  const [quantity, setQuantity] = useState(initialQuantity);
+
+  const product = { id, name, status, photoUrl, price, description, category };
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
   };
 
-  // const handleAdditionChange = (event, product, addition) => {
-  //   if (event.target.checked) {
-  //     addAdditionToProduct(product, addition);
-  //   } else {
-  //     removeAdditionToProduct(product, addition);
-  //   }
-  // };
+  const handleRemoveFromCart = () => {
+    removeFromCart(product.id);
+  };
+
+  const handleQuantityChange = (value) => {
+    setQuantity(value);
+  };
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -29,9 +33,21 @@ function Suggestion({ name, status, photoUrl, price, description }) {
           <SuggestionDescription>{description}</SuggestionDescription>
           <SuggestionPrice>R${price}</SuggestionPrice>
           <SuggestionRating name="suggestion-rating" value={status} readOnly precision={0.5} />
-          <SuggestionButton variant="contained" color="secondary" onClick={() => handleAddToCart(product)} >
-            Adicionar ao carrinho
-          </SuggestionButton>
+
+          {cart ? (
+            <>
+              <QuantityButton onClick={() => handleQuantityChange(quantity - 1)}>-</QuantityButton>
+              <Typography variant="body1">{quantity}</Typography>
+              <QuantityButton onClick={() => handleQuantityChange(quantity + 1)}>+</QuantityButton>
+              <SuggestionButton variant="contained" color="secondary" onClick={handleRemoveFromCart}>
+                Remover do carrinho
+              </SuggestionButton>
+            </>
+          ) : (
+            <SuggestionButton variant="contained" color="secondary" onClick={handleAddToCart}>
+              Adicionar ao carrinho
+            </SuggestionButton>
+          )}
         </SuggestionPaper>
       </SuggestionContainer>
     </Grid>
@@ -50,18 +66,12 @@ export default function Suggestions() {
   if (!productsData) {
     return null;
   }
-
+  const combos = productsData.products.filter((product) => product.category === 'Combos');
   return (
     <SugesMain>
-      <Title>Promoçoes</Title>
+      <Title>Combos</Title>
       <Grid container spacing={3}>
-        {productsData.products.map((suggestion) => (
-          <Suggestion key={suggestion.id} {...suggestion} />
-        ))}
-      </Grid>
-      <Title>Aqueles</Title>
-      <Grid container spacing={3} className='footerspace'>
-        {productsData.products.map((suggestion) => (
+        {combos.map((suggestion) => (
           <Suggestion key={suggestion.id} {...suggestion} />
         ))}
       </Grid>
@@ -97,6 +107,13 @@ const SugesMain = styled.section`
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+  margin-bottom: 200px;
+  @media (max-width: 600px) {
+  margin-bottom: 400px;
+  }
+  @media (min-width:320px) and (max-width: 900px){
+    margin-bottom: 500px !important;
+  }
 `;
 
 const Title = styled.h2`
@@ -150,7 +167,10 @@ const SuggestionButton = styled(Button)`
   margin-top: 20px;
   color: white;
 `;
-
+const QuantityButton = styled(Button)`
+  margin-top: 20px;
+  color: white;
+`;
 const SuggestionRating = styled(Rating)`
   margin-top: 10px;
   color: white;

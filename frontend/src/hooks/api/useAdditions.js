@@ -10,7 +10,7 @@ export default function useAdditions() {
     loading: additionLoading,
     error: additionError,
     act: getAdditions
-  } = useAsync((boby) => additionsApi.getAdditionsInformations(token, boby));
+  } = useAsync(() => additionsApi.getAdditionsInformations(token));
 
   const {
     data: getaddition,
@@ -38,7 +38,7 @@ export default function useAdditions() {
     loading: putputadditionLoading,
     error: putadditionError,
     act: putAdditions
-  } = useAsync((boby) => additionsApi.putAddressInformations(token, boby));
+  } = useAsync((boby) => additionsApi.putAdditionsInformations(token, boby));
 
   return {
     addition,

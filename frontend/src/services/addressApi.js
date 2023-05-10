@@ -8,6 +8,14 @@ export async function getAddressInformations(token, body) {
   });
   return response.data;
 }
+export async function getAllAddressInformations(token) {
+  const response = await api.get('/address/all', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
 
 export async function deleteAddressInformations(token, boby) {
   const response = await api.delete('/address', boby, {

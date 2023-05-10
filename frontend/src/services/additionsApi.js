@@ -1,7 +1,7 @@
 import api from './api';
 
 export async function getAdditionsInformations(body, token) {
-  const response = await api.get('/additions', body, {
+  const response = await api.get('/additions', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

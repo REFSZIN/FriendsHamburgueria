@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import useProducts from '../hooks/api/useProducts';
 import CartContext from '../contexts/CartContext';
 
-function Suggestion({ name, status, photoUrl, price, description }) {
-  const { addToCart } = useContext(CartContext);
-  const product = { name, status, photoUrl, price, description };
+function Suggestion({ id, name, status, photoUrl, price, description, category }) {
+  const { cart, addToCart } = useContext(CartContext);
 
-  const handleAddToCart = (product) => {
-    addToCart(product);
+  const product = { id, name, status, photoUrl, price, description, category };
+  const cartItem = cart?.items?.find((item) => item.id === id);
+  const initialQuantity = cartItem ? cartItem.quantity : 0;
+  const [quantity, setQuantity] = useState(initialQuantity);
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
   };
 
-  // const handleAdditionChange = (event, product, addition) => {
-  //   if (event.target.checked) {
-  //     addAdditionToProduct(product, addition);
-  //   } else {
-  //     removeAdditionToProduct(product, addition);
-  //   }
-  // };
+  const handleQuantityChange = (value) => {
+    setQuantity(value);
+  };
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -29,18 +29,46 @@ function Suggestion({ name, status, photoUrl, price, description }) {
           <SuggestionImg src={photoUrl} alt={name} />
           <SuggestionDescription>{description}</SuggestionDescription>
           <SuggestionPrice>R${price}</SuggestionPrice>
-          <SuggestionRating name="suggestion-rating" value={status} readOnly precision={0.5} />
-          <SuggestionButton variant="contained" color="secondary" onClick={() => handleAddToCart(product)} >
-            Adicionar ao carrinho
-          </SuggestionButton>
+          <SuggestionRating name="suggestion-rating" value={status} />
+          {cartItem ? (
+            <>
+              <QuantityButton onClick={() => handleQuantityChange(quantity - 1)}>-</QuantityButton>
+              <Typography variant="body1">{quantity}</Typography>
+              <QuantityButton onClick={() => handleQuantityChange(quantity + 1)}>+</QuantityButton>
+              <SuggestionButton variant="contained" color="secondary" onClick={handleAddToCart}>
+                Atualizar carrinho
+              </SuggestionButton>
+            </>
+          ) : (
+            <SuggestionButton variant="contained" color="secondary" onClick={handleAddToCart}>
+              Adicionar ao carrinho
+            </SuggestionButton>
+          )}
         </SuggestionPaper>
       </SuggestionContainer>
     </Grid>
   );
 }
+function Category({ name, products, isOpen, toggleOpen }) {
+  return (
+    <div>
+      <Title onClick={toggleOpen}>
+        {name} {isOpen ? <SuggestionButton variant="contained" color="primary">-</SuggestionButton>:<SuggestionButton variant="contained" color="secondary">+</SuggestionButton>}
+      </Title>
+      {isOpen && (
+        <Grid container spacing={3}>
+          {products.map((suggestion) => (
+            <Suggestion key={suggestion.id} {...suggestion} />
+          ))}
+        </Grid>
+      )}
+    </div>
+  );
+}
 
 export default function Suggestions() {
   const { productsLoading, productsError, productsData } = useProducts();
+  const [openCategories, setOpenCategories] = useState([]);
 
   if (productsLoading) {
     return <div>Loading...</div>;
@@ -52,20 +80,35 @@ export default function Suggestions() {
     return null;
   }
 
+  const groupedProducts = productsData.products.reduce((acc, product) => {
+    const category = product.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(product);
+    return acc;
+  }, {});
+
+  const toggleCategory = (categoryName) => {
+    setOpenCategories((openCategories) => {
+      const isOpen = openCategories.includes(categoryName);
+      return isOpen
+        ? openCategories.filter((name) => name !== categoryName)
+        : [...openCategories, categoryName];
+    });
+  };
+
   return (
     <SugesMain>
-      <Title>Promoçoes</Title>
-      <Grid container spacing={3}>
-        {productsData.products.map((suggestion) => (
-          <Suggestion key={suggestion.id} {...suggestion} />
-        ))}
-      </Grid>
-      <Title>Aqueles</Title>
-      <Grid container spacing={3} className='footerspace'>
-        {productsData.products.map((suggestion) => (
-          <Suggestion key={suggestion.id} {...suggestion} />
-        ))}
-      </Grid>
+      {Object.keys(groupedProducts).map((category) => (
+        <Category
+          key={category}
+          name={category}
+          products={groupedProducts[category]}
+          isOpen={openCategories.includes(category)}
+          toggleOpen={() => toggleCategory(category)}
+        />
+      ))}
     </SugesMain>
   );
 }
@@ -99,6 +142,18 @@ const SugesMain = styled.section`
   align-items: center;
   flex-wrap: nowrap;
   margin-top: 90px;
+  margin-bottom: 150px;
+  @media (max-width: 600px) {
+  margin-bottom: 170px;
+  }
+  @media (min-width:320px) and (max-width: 900px){
+    margin-bottom: 0px !important;
+  }
+`;
+
+const QuantityButton = styled(Button)`
+  margin-top: 20px;
+  color: white;
 `;
 
 const Title = styled.h2`

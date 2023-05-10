@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "@/config";
-import { Product, Purchase } from "@/schemas";
+import { Product, Purchase, AddressPut } from "@/schemas";
+import { Address } from "@/services/adress-service";
 import { Prisma } from "@prisma/client";
 
 interface UpdatePurchaseInput {
-  produtos?: Array<Product>;
-  address?: string;
-  metodo?: string;
+  produtos: Array<Product>;
+  address: string[];
+  metodo: string;
   description?: string;
-  price?: number;
-  category?: string;
+  price: number;
 }
 
 const purchaseRepository = {
@@ -34,17 +34,23 @@ async function find(): Promise<Purchase[]> {
 
 async function create(purchaseData: {
   userId: number;
-  produtos: Prisma.purchaseCreateprodutosInput;
-  address: string;
+  produtos: string[];
+  address: string[];
   metodo: string;
-  description: string;
+  description?: string;
   price: number;
 }): Promise<Purchase> {
-  const { userId, produtos, address, metodo, description, price } = purchaseData;
-  const purchase = await prisma.purchase.create({
-    data: { userId, produtos, address, metodo: parseInt(metodo), description, price }
-  });
-  return purchase;
+  try {
+    const { userId, produtos, address, metodo, description, price } = purchaseData;
+    console.log("bbbbbbbbb", purchaseData);
+    const purchase = await prisma.purchase.create({
+      data: { userId, produtos, address, metodo, description, price }
+    });
+    console.log("aaaaaaaaaaaa", purchase);
+    return purchase;
+  } catch (error) {
+    throw new Error("Ocorreu um erro ao criar a compra: " + error.message);
+  }
 }
 
 async function deleteById(id: number): Promise<Purchase | null> {

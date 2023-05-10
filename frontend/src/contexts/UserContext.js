@@ -6,7 +6,7 @@ const UserContext = createContext();
 export default UserContext;
 
 export function UserProvider({ children }) {
-  const [userData, setUserData] = useLocalStorage('userData', {});
+  const [userData, setUserData] = useLocalStorage('userData', { token: 'sdwdwd', user: { type: 0 } });
   
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
