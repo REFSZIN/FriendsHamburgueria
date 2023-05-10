@@ -12,10 +12,16 @@ export default function useSaveAddrees() {
   } = useAsync((boby) => addressApi.getAddressInformations(token, boby));
 
   const {
+    loading: getAllsaveAddreesLoading,
+    error: getAllsaveAddreesError,
+    act: getAllsaveAddrees
+  } = useAsync(() => addressApi.getAllAddressInformations(token));
+
+  const {
     loading: postsaveAddreesLoading,
     error: postsaveAddreesError,
     act: postsaveAddrees
-  } = useAsync((boby) => addressApi.postAddressInformations(token, boby ));
+  } = useAsync((boby) => addressApi.postAddressInformations(token, boby));
 
   const {
     loading: deletesaveAddreesLoading,
@@ -41,6 +47,9 @@ export default function useSaveAddrees() {
     deletesaveAddrees,
     putsaveAddreesLoading,
     putsaveAddreesError,
-    putsaveAddrees
+    putsaveAddrees,
+    getAllsaveAddreesLoading,
+    getAllsaveAddreesError,
+    getAllsaveAddrees
   };
 }

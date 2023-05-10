@@ -8,7 +8,7 @@ export default function useCep() {
     loading: cepLoading,
     error: cepError,
     act: getCep,
-  } = useAsync(cepApi.getAddress, false);
+  } = useAsync((cep) => cepApi.getAddress( cep ));
 
   return {
     cep,

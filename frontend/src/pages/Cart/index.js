@@ -17,7 +17,7 @@ export default function CartPage() {
         <Button m={2} pt={3} startIcon={<ShoppingCart />} variant="contained" color="primary">
           Carrinho com {cartData.products.length} items
         </Button>
-        <Carrinho cartData={cartData.products} onAddToCart={addToCart} onRemoveFromCart={removeProductFromCart} addAdditionToProduct={addAdditionToProduct} removeAdditionToProduct={removeAdditionToProduct} />
+        <Carrinho cartData={cartData.products} user={localStorage.getItem('userData')} onAddToCart={addToCart} onRemoveFromCart={removeProductFromCart} addAdditionToProduct={addAdditionToProduct} removeAdditionToProduct={removeAdditionToProduct} />
       </MainCart>
       <Footer/>
     </Main>
@@ -48,4 +48,13 @@ const MainCart = styled.section`
   align-content: center;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 200px;
+  @media (max-width: 600px) {
+  padding: 20px;
+  margin-bottom: 400px;
+  margin-top: calc(10vh);
+  }
+  @media (min-width:320px) and (max-width: 900px){
+    margin-bottom: 500px !important;
+  }
 `;

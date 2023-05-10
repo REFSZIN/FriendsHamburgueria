@@ -38,6 +38,7 @@ model address {
   neighborhood  String     @db.VarChar(255)
   addressDetail String?    @db.VarChar(255)
   userId        Int       
+  status        Int        @default(0)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }
@@ -47,11 +48,11 @@ model purchase {
   userId    Int
   user      user      @relation(fields: [userId], references: [id])
   produtos  String[]
-  address   String
-  metodo    Int
+  address   String[]
+  metodo    String
   description String?
   price     Int 
-  status    Int @default(0)
+  status    Int       @default(0)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -61,7 +62,7 @@ model product {
   @@index([id])
   name        String
   category    String 
-  status      Int @default(0)
+  status      Int         @default(0)
   photoUrl    String
   price       Float 
   additions String[]
@@ -75,7 +76,7 @@ model additions {
   @@index([id])
   name        String
   category    String 
-  status      Int @default(0)
+  status      Int         @default(0)
   quantity    Int 
   photoUrl    String
   price       Float 

@@ -70,7 +70,7 @@ export default function Header() {
             <NavItem>
               <Link to="/perfil">
                 <Person />
-              Perfil
+                Endereços
               </Link>
             </NavItem> 
           </> : <></>}
@@ -185,7 +185,7 @@ export default function Header() {
               <NavItem>
                 <Link to="/perfil">
                   <Person />
-                Perfil
+                Endereços
                 </Link>
               </NavItem> 
             </MenuItem> : <p></p>}

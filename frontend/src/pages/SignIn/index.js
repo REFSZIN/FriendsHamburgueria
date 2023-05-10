@@ -62,13 +62,13 @@ export default function SignIn() {
             .then (async(res) => {
               const userData = await signIn(result.user.email, result.user.uid);
               setUserData(userData);
-              navigate('/dashboard');
+              navigate('/');
               toast('Login realizado com sucesso!');
             })
             .catch(async(error) => {
               const userData = await signIn(result.user.email, result.user.uid);
               setUserData(userData);
-              navigate('/dashboard');
+              navigate('/');
               toast('Login realizado com sucesso!');
             });
         }

@@ -23,6 +23,13 @@ async function getAddressById(addressId: number, userId: number): Promise<addres
   }
   return existingAddress;
 }
+async function getAddress( userId: number): Promise<address[] | null> {
+  const existingAllAddress = await addressRepository.find(userId);
+  if (!existingAllAddress) {
+    throw new Error("Endereço não encontrado");
+  }
+  return existingAllAddress;
+}
 
 async function createAddress( userId: number, cep: string, street: string, city: string, state: string, number: string, neighborhood: string, addressDetail: string): Promise<Address> {
   const addressData = { cep, userId, street, city, state, number, neighborhood, addressDetail };  
@@ -60,6 +67,7 @@ async function updateAddress(address: number, userId: number, updates: Partial<O
 
 const addressService = {
   getAddressById,
+  getAddress,
   createAddress,
   updateAddress,
   deleteAddressById,

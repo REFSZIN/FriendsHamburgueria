@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
 const PontosFidelidade = ({ pontosFidelidade }) => {
-  // Add logic for displaying user loyalty points here
   return (
     <PointsContainer>
       <PointsHeading>Pontos de Fidelidade</PointsHeading>
-      <PointsText>Você tem {pontosFidelidade} pontos de fidelidade. A cada compra você ganha mais pontos que podem ser trocados por descontos.</PointsText>
+      <PointsText>
+        Você tem {pontosFidelidade} pontos de fidelidade. A cada compra, você ganha mais pontos que podem ser trocados por descontos.
+      </PointsText>
     </PointsContainer>
   );
 };
@@ -21,13 +22,13 @@ const PedidosAnteriores = ({ pedidosAnteriores }) => {
       ) : (
         <OrdersList>
           {pedidosAnteriores.map((pedido) => (
-            <Order key={pedido.id}>
+            <Order key={pedido.userId}>
               <OrderInfo>
-                <OrderName>{pedido.nome}</OrderName>
-                <OrderPrice>R${pedido.preco.toFixed(2)}</OrderPrice>
+                <OrderName>{pedido.produtos[0].name}</OrderName>
+                <OrderPrice>R${pedido.price}</OrderPrice>
               </OrderInfo>
-              <OrderStatus status={pedido.status}>
-                {pedido.status === 0 ? 'Em andamento' : 'Finalizado'}
+              <OrderStatus status={pedido.produtos[0].status}>
+                {pedido.produtos[0].status === 0 ? 'Em andamento' : 'Finalizado'}
               </OrderStatus>
             </Order>
           ))}
@@ -41,16 +42,112 @@ export default function Pedidos() {
   // Add logic for storing user's previous orders and loyalty points data
   const [pedidosAnteriores] = useState([
     {
-      id: 1,
-      nome: 'Pizza de Calabresa',
-      preco: 29.9,
-      status: 1,
+      userId: 1,
+      produtos: [
+        {
+          id: 45,
+          name: 'Heineken Garrafa',
+          status: 0,
+          photoUrl: 'https://static.ifood-static.com.br/image/upload/t_medium/pratos/820af392-002c-47b1-bfae-d7ef31743c7f/202210190040_6g7rha4jac8.jpg',
+          price: 18,
+          description: '600ml',
+          quantity: 14,
+          additions: []
+        },
+        {
+          id: 28,
+          name: 'Combo Aquele Tudo',
+          status: 0,
+          photoUrl: 'https://i.im.ge/2023/04/17/LLEu5W.COMBO-AQUELE-BUEGUER-IFOOD.png',
+          price: 74,
+          description: '3 Aquele Tudo, Fritas 350gr com chedder, calabresa , Refri 2 litros e Maionese Friends',
+          quantity: 1,
+          additions: []
+        },
+        {
+          id: 36,
+          name: 'Batata Friends Grande',
+          status: 0,
+          photoUrl: 'https://i.im.ge/2023/04/17/LLEXfm.BATATA-FRITA-IFOOD.png',
+          price: 20,
+          description: 'Batata Frita 350gr, Cheddar ou Catupiry e Bacon ou Calabresa',
+          quantity: 36,
+          additions: []
+        }
+      ],
+      address: [
+        {
+          id: 1,
+          cep: '36013-210',
+          street: 'Rua Roberto de Barros',
+          city: 'Juiz de Fora',
+          state: 'MG',
+          number: '238',
+          neighborhood: 'Centro',
+          addressDetail: '231',
+          userId: 1,
+          status: 0,
+          createdAt: '2023-05-09T19:28:18.177Z',
+          updatedAt: '2023-05-09T19:28:18.178Z'
+        }
+      ],
+      metodo: 'Dinheiro',
+      description: 'a',
+      price: '1046.00'
     },
     {
-      id: 2,
-      nome: 'Refrigerante Lata',
-      preco: 4.5,
-      status: 0,
+      userId: 1,
+      produtos: [
+        {
+          id: 45,
+          name: 'Heineken Garrafa',
+          status: 0,
+          photoUrl: 'https://static.ifood-static.com.br/image/upload/t_medium/pratos/820af392-002c-47b1-bfae-d7ef31743c7f/202210190040_6g7rha4jac8.jpg',
+          price: 18,
+          description: '600ml',
+          quantity: 14,
+          additions: []
+        },
+        {
+          id: 28,
+          name: 'Combo Aquele Tudo',
+          status: 0,
+          photoUrl: 'https://i.im.ge/2023/04/17/LLEu5W.COMBO-AQUELE-BUEGUER-IFOOD.png',
+          price: 74,
+          description: '3 Aquele Tudo, Fritas 350gr com chedder, calabresa , Refri 2 litros e Maionese Friends',
+          quantity: 1,
+          additions: []
+        },
+        {
+          id: 36,
+          name: 'Batata Friends Grande',
+          status: 0,
+          photoUrl: 'https://i.im.ge/2023/04/17/LLEXfm.BATATA-FRITA-IFOOD.png',
+          price: 20,
+          description: 'Batata Frita 350gr, Cheddar ou Catupiry e Bacon ou Calabresa',
+          quantity: 36,
+          additions: []
+        }
+      ],
+      address: [
+        {
+          id: 1,
+          cep: '36013-210',
+          street: 'Rua Roberto de Barros',
+          city: 'Juiz de Fora',
+          state: 'MG',
+          number: '238',
+          neighborhood: 'Centro',
+          addressDetail: '231',
+          userId: 1,
+          status: 0,
+          createdAt: '2023-05-09T19:28:18.177Z',
+          updatedAt: '2023-05-09T19:28:18.178Z'
+        }
+      ],
+      metodo: 'Dinheiro',
+      description: 'baleia@gmail.com',
+      price: '1046.00'
     },
   ]);
   const [pontosFidelidade] = useState(100);
@@ -113,21 +210,20 @@ const OrderName = styled.p`
   font-weight: 700;
   margin: 0 0 8px;
 `;
-
 const OrderPrice = styled.p`
   color: #666666;
   font-size: 16px;
   margin: 0;
 `;
 
-const OrderStatus = styled.div`
+const OrderStatus = styled.span`
   background-color: ${(props) =>
-    props.status === 0 ? '#ffbf00' : '#8bc34a'};
+    props.status === 0 ? '#f9d56e' : '#a1f0dc'};
   border-radius: 4px;
-  color: #ffffff;
-  font-size: 16px;
+  color: ${(props) => (props.status === 0 ? '#ffffff' : '#1a1a1a')};
+  font-size: 14px;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 4px 8px;
 `;
 
 const PointsContainer = styled.div`
@@ -151,8 +247,8 @@ const PointsText = styled.p`
 `;
 
 const MainContainer = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
-  max-width: 960px;
-  padding: 24px;
+  padding: 32px 16px;
   margin-top: 100px;
 `;

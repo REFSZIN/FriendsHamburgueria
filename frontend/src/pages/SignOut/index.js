@@ -45,7 +45,7 @@ export default function SignOut() {
     try {
       const userData = await signIn(email, password);
       setUserData(userData);
-      navigate('/dashboard');
+      navigate('/');
       toast('Login realizado com sucesso!');
     } catch (err) {
       toast('Não foi possível fazer o login!');

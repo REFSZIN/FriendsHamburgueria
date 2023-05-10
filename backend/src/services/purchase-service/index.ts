@@ -1,6 +1,7 @@
 import purchaseRepository from "@/repositories/purchase-repository";
 import { Product, Purchase } from "@/schemas";
 import userRepository from "@/repositories/user-repository";
+import { Address } from "../adress-service";
 
 async function getPurchase(): Promise<Purchase[]> {
   const purchases = await purchaseRepository.find();
@@ -11,7 +12,7 @@ async function getPurchaseById(userId: number): Promise<Purchase> {
   const purchases = await purchaseRepository.findById(userId);
   return purchases;
 }
-async function createPurchase(userId: number, produtos: Product[], address: string, metodo: string, description: string, price: number): Promise<Purchase> {
+async function createPurchase(userId: number, produtos: string[], address: string[], metodo: string, description: string, price: number): Promise<Purchase> {
   const user = await userRepository.find(userId);
   if (!user) {
     throw new Error("User not found");
@@ -19,12 +20,7 @@ async function createPurchase(userId: number, produtos: Product[], address: stri
   if (produtos.length === 0) {
     throw new Error("Products list is empty");
   }
-
-  const produtosData = {
-    set: produtos.map(product => product.name)
-  };
-
-  const purchaseData = { userId, produtos: produtosData, address, metodo, description, price };
+  const purchaseData = { userId, produtos, address, metodo, description, price };
   const purchase = await purchaseRepository.create(purchaseData);
   return purchase;
 }
@@ -41,7 +37,7 @@ async function deletePurchase(userId: number, purchaseId: number): Promise<Purch
   return deletedPurchase;
 }
 
-async function putPurchase(purchaseId: number, produtos: Product[], address: string, metodo: string, description: string, price: number, userId: number): Promise<Purchase> {
+async function putPurchase(purchaseId: number, produtos: Product[], address: string[], metodo: string, description: string, price: number, userId: number): Promise<Purchase> {
   const purchase = await purchaseRepository.findById(purchaseId);
   if (!purchase) {
     throw new Error("Purchase not found");
